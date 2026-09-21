@@ -2,54 +2,53 @@
   const IG = "https://instagram.com/beeforestry";
   const PHONE = "787-598-3543";
   const EMAIL = "Beeforestry@gmail.com";
+  const LEAD_ENDPOINT = "https://formsubmit.co/ajax/" + EMAIL;
 
   const replies = [
     {
       keys: ["hola", "buenas", "saludos", "hey"],
-      text: "¡Hola! Soy el asistente de BeeForestry. ¿Le ayudo con rescate de abejas, agroforestería, colmenas/cajas, la guía digital o una colaboración/escuela?",
+      text: "¡Hola! Déjeme su nombre y teléfono abajo para que BeeForestry le llame lo antes posible. Mientras, ¿es rescate de abejas, agroforestería, tienda, guía o escuela?",
     },
     {
       keys: ["rescate", "remoci", "reubic", "enjambre", "colonia", "abeja", "panal", "quitar"],
-      text: `Rescatamos y reubicamos abejas en Puerto Rico (no exterminamos). Para cotizarle mejor: municipio, dónde están (techo, pared, árbol…) y fotos. Escríbanos por Instagram ${IG} o llame al ${PHONE}. También puede usar el formulario de cotización en esta página.`,
+      text: "Rescatamos y reubicamos (no exterminamos). Deje su teléfono abajo y le llamamos. Si puede, diga municipio y dónde están las abejas; fotos por Instagram @beeforestry ayudan.",
     },
     {
       keys: ["agro", "forest", "finca", "solar", "siembra"],
-      text: `Ofrecemos preparación de sistemas agroforestales (diagnóstico, diseño e instalación guiada, con colmenas si aplica). Cuéntenos municipio y tamaño aproximado del terreno en el formulario de cotización, o por Instagram @beeforestry.`,
+      text: "Preparación de agroforestales: deje nombre y teléfono abajo y le contactamos. Incluya municipio y tamaño aproximado del terreno si puede.",
     },
     {
       keys: ["colmena", "caja", "apiario", "equipo", "tienda"],
-      text: "Vendemos colmenas y cajas de abejas según temporada y modelo. Pulse “Me interesa” en la tienda o escríbanos a Instagram @beeforestry / " + PHONE + " para disponibilidad y precio.",
+      text: "Colmenas y cajas según temporada. Deje su teléfono abajo para confirmarle disponibilidad y precio.",
     },
     {
       keys: ["guía", "guia", "digital", "pdf", "manual", "20", "comprar"],
-      text: "La Guía BeeForestry (agroforestería + abejas en PR) cuesta $20 en descarga digital. Puede reservarla en la sección de la guía; coordinamos el pago (ATH Móvil, cash o cheque) y le enviamos el PDF.",
+      text: "La guía digital cuesta $20. Deje nombre, teléfono y correo abajo (o use la sección de la guía) y le coordinamos el pago y el PDF.",
     },
     {
       keys: ["escuela", "colegio", "volunt", "colabor", "taller", "alianza"],
-      text: "Recibimos propuestas de colaboración, voluntariado y escuelas. Use el formulario de colaboraciones en esta página con fechas y objetivos, o escríbanos por Instagram @beeforestry.",
+      text: "Colaboraciones y escuelas: deje teléfono abajo y un resumen breve; también está el formulario de colaboraciones en la página.",
     },
     {
       keys: ["precio", "cuesta", "costo", "tarifa", "cotiz"],
-      text: "El precio del rescate depende de acceso, altura y tipo de colonia; no cotizamos a ciegas. Envíe municipio + fotos por Instagram o el formulario. La guía digital está fija en $20. Colmenas y cajas se cotizan según modelo.",
+      text: "Para cotizarle bien necesitamos su teléfono (y fotos si es rescate). La guía digital está en $20. Deje sus datos abajo y le llamamos.",
     },
     {
       keys: ["instagram", "ig", "dm", "mensaje"],
-      text: `Nuestro Instagram es @beeforestry: ${IG}. Ahí atendemos cotizaciones de remoción y reubicación, y compartimos rescates en Puerto Rico.`,
+      text: "Instagram @beeforestry: " + IG + ". Aun así, déjenos teléfono aquí por si el mensaje se pierde — así le podemos llamar.",
     },
     {
       keys: ["teléfono", "telefono", "llamar", "whatsapp", "contacto", "correo", "email"],
-      text: `Contacto BeeForestry: ${PHONE} · ${EMAIL} · Instagram @beeforestry (${IG}).`,
+      text: "Puede llamarnos al " + PHONE + " o escribir a " + EMAIL + ". Lo más rápido: deje su número en el formulario de esta burbuja y le devolvemos la llamada.",
     },
     {
       keys: ["extermin", "matar", "veneno", "fumig"],
-      text: "BeeForestry no extermina. Rescatamos y reubicamos: protege a su familia y a las abejas. Si tiene un enjambre o colonia, le orientamos el rescate seguro.",
+      text: "No exterminamos: rescatamos y reubicamos. Deje su teléfono abajo y le orientamos el rescate seguro.",
     },
   ];
 
   const fallback =
-    "Puedo orientarle sobre rescate, agroforestería, colmenas/cajas, la guía ($20), escuelas/voluntariado o contacto. Si prefiere hablar con el equipo: Instagram @beeforestry o " +
-    PHONE +
-    ".";
+    "Para no perdernos: deje su nombre y teléfono abajo y BeeForestry le llama. Mientras, puedo orientarle sobre rescate, agroforestería, tienda, guía ($20) o escuelas.";
 
   function normalize(s) {
     return (s || "")
@@ -60,7 +59,7 @@
 
   function answer(input) {
     const q = normalize(input);
-    if (!q.trim()) return "¿En qué le puedo ayudar?";
+    if (!q.trim()) return "¿En qué le puedo ayudar? Recuerde dejar su teléfono abajo.";
     for (const row of replies) {
       if (row.keys.some((k) => q.includes(normalize(k)))) return row.text;
     }
@@ -78,7 +77,7 @@
       <header class="bf-head">
         <div>
           <strong>Asistente BeeForestry</strong>
-          <p>Respuestas rápidas · usted</p>
+          <p>Deje su teléfono — le llamamos</p>
         </div>
         <button type="button" class="bf-close" aria-label="Cerrar">×</button>
       </header>
@@ -89,10 +88,26 @@
         <button type="button" data-q="Colmenas o cajas">Tienda</button>
         <button type="button" data-q="Guía digital">Guía $20</button>
         <button type="button" data-q="Escuela o voluntariado">Escuelas</button>
-        <button type="button" data-q="Instagram">Instagram</button>
       </div>
+      <form class="bf-lead" id="bf-lead">
+        <p class="bf-lead-title">Para llamarle personalmente</p>
+        <input name="nombre" required placeholder="Su nombre" autocomplete="name" />
+        <input name="telefono" required type="tel" placeholder="Teléfono (requerido)" autocomplete="tel" />
+        <input name="municipio" placeholder="Municipio (opcional)" />
+        <select name="motivo">
+          <option value="Rescate / reubicación">Rescate / reubicación</option>
+          <option value="Agroforestería">Agroforestería</option>
+          <option value="Colmenas / cajas">Colmenas / cajas</option>
+          <option value="Guía digital $20">Guía digital $20</option>
+          <option value="Escuela / voluntariado">Escuela / voluntariado</option>
+          <option value="Otro">Otro</option>
+        </select>
+        <textarea name="detalle" rows="2" placeholder="Detalle breve (opcional)"></textarea>
+        <button class="btn" type="submit">Enviar para que me llamen</button>
+        <p class="bf-lead-msg" id="bf-lead-msg" hidden></p>
+      </form>
       <form class="bf-form">
-        <input type="text" name="msg" autocomplete="off" placeholder="Escriba su pregunta…" aria-label="Mensaje" />
+        <input type="text" name="msg" autocomplete="off" placeholder="O escriba una pregunta…" aria-label="Mensaje" />
         <button type="submit" class="btn">Enviar</button>
       </form>
     </div>
@@ -104,6 +119,8 @@
   const closeBtn = root.querySelector(".bf-close");
   const msgs = root.querySelector("#bf-msgs");
   const form = root.querySelector(".bf-form");
+  const leadForm = root.querySelector("#bf-lead");
+  const leadMsg = root.querySelector("#bf-lead-msg");
 
   function addMsg(text, who) {
     const el = document.createElement("div");
@@ -118,7 +135,7 @@
     fab.setAttribute("aria-expanded", "true");
     if (!msgs.dataset.greeted) {
       addMsg(
-        "¡Hola! Soy el asistente del website BeeForestry. Pregunte por rescate, agroforestería, tienda, guía ($20) o colaboraciones. Para el equipo: Instagram @beeforestry.",
+        "¡Hola! Si necesita ayuda, deje su nombre y teléfono abajo. BeeForestry le llama lo antes posible — así no se pierde si cierra la página.",
         "bot"
       );
       msgs.dataset.greeted = "1";
@@ -149,5 +166,96 @@
     addMsg(q, "user");
     addMsg(answer(q), "bot");
     input.value = "";
+  });
+
+  leadForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(leadForm).entries());
+    const telefono = (data.telefono || "").trim();
+    const nombre = (data.nombre || "").trim();
+    if (!nombre || !telefono) {
+      leadMsg.hidden = false;
+      leadMsg.textContent = "Nombre y teléfono son necesarios para llamarle.";
+      return;
+    }
+
+    const payload = {
+      _subject: "BeeForestry web — llamar al cliente",
+      nombre,
+      telefono,
+      municipio: data.municipio || "",
+      motivo: data.motivo || "",
+      detalle: data.detalle || "",
+      fuente: "burbuja-website",
+      pagina: location.href,
+    };
+
+    try {
+      localStorage.setItem(
+        "beeforestry-web-leads",
+        JSON.stringify(
+          [{ ...payload, at: new Date().toISOString() }].concat(
+            JSON.parse(localStorage.getItem("beeforestry-web-leads") || "[]")
+          ).slice(0, 50)
+        )
+      );
+    } catch (_) {}
+
+    const btn = leadForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.textContent = "Enviando…";
+    leadMsg.hidden = false;
+    leadMsg.textContent = "Enviando su contacto…";
+
+    try {
+      const res = await fetch(LEAD_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("send failed");
+      leadMsg.textContent =
+        "Gracias. Ya enviamos su teléfono a BeeForestry para que le llamen pronto.";
+      addMsg(
+        "Recibimos su contacto (" + telefono + "). El equipo le llamará lo antes posible.",
+        "bot"
+      );
+      leadForm.reset();
+    } catch (_) {
+      const body =
+        "Nombre: " +
+        nombre +
+        "\nTeléfono: " +
+        telefono +
+        "\nMunicipio: " +
+        (data.municipio || "") +
+        "\nMotivo: " +
+        (data.motivo || "") +
+        "\nDetalle: " +
+        (data.detalle || "") +
+        "\nPágina: " +
+        location.href;
+      window.location.href =
+        "mailto:" +
+        EMAIL +
+        "?subject=" +
+        encodeURIComponent("BeeForestry web — llamar al cliente") +
+        "&body=" +
+        encodeURIComponent(body);
+      leadMsg.textContent =
+        "Si no se abrió el correo, anote el " +
+        PHONE +
+        " o Instagram @beeforestry. Su número quedó guardado en este navegador.";
+      addMsg(
+        "Intentamos avisarle al equipo. Si puede, escríbanos también por Instagram @beeforestry con su teléfono.",
+        "bot"
+      );
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Enviar para que me llamen";
+    }
   });
 })();

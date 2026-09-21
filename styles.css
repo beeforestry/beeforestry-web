@@ -270,3 +270,18 @@ dialog {
   padding: 0.55rem 0.85rem; font: inherit;
 }
 .bf-form .btn { padding: 0.55rem 0.9rem; border-radius: 999px; }
+
+.bf-lead {
+  display: grid; gap: 0.4rem; padding: 0.65rem 0.75rem;
+  border-top: 1px solid #e6ddd0; background: #fffdf8;
+}
+.bf-lead-title {
+  margin: 0 0 0.15rem; font-size: 0.82rem; font-weight: 700; color: #1a2e1a;
+}
+.bf-lead input, .bf-lead select, .bf-lead textarea {
+  width: 100%; border: 1px solid #e6ddd0; border-radius: 10px;
+  padding: 0.5rem 0.7rem; font: inherit; background: #fff;
+}
+.bf-lead .btn { width: 100%; border-radius: 999px; }
+.bf-lead-msg { margin: 0.15rem 0 0; font-size: 0.8rem; color: #1e4a28; }
+.bf-panel { max-height: min(82vh, 640px); }
