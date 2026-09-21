@@ -209,3 +209,64 @@ dialog {
 @media (max-width: 800px) {
   .split { grid-template-columns: 1fr; }
 }
+
+/* BeeForestry site assistant bubble */
+#bf-assistant { position: fixed; right: 1rem; bottom: 1rem; z-index: 80; font-family: "DM Sans", system-ui, sans-serif; }
+.bf-fab {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  border: none; cursor: pointer;
+  background: var(--leaf, #2f6b3a); color: #fff;
+  border-radius: 999px; padding: 0.75rem 1.05rem;
+  box-shadow: 0 10px 30px rgba(26, 46, 26, 0.25);
+  font: inherit; font-weight: 600;
+}
+.bf-fab:hover { background: var(--leaf-deep, #1e4a28); }
+.bf-fab-icon { font-size: 1.15rem; }
+.bf-panel {
+  position: absolute; right: 0; bottom: 3.6rem;
+  width: min(360px, calc(100vw - 1.5rem));
+  background: #fff; border: 1px solid var(--line, #e6ddd0);
+  border-radius: 18px; box-shadow: 0 18px 50px rgba(26, 46, 26, 0.18);
+  overflow: hidden; display: flex; flex-direction: column;
+  max-height: min(70vh, 520px);
+}
+.bf-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 0.5rem; padding: 0.9rem 1rem;
+  background: linear-gradient(135deg, #2f6b3a, #1e4a28); color: #fff;
+}
+.bf-head p { margin: 0.15rem 0 0; font-size: 0.8rem; opacity: 0.9; font-weight: 400; }
+.bf-close {
+  border: none; background: transparent; color: #fff;
+  font-size: 1.4rem; line-height: 1; cursor: pointer; padding: 0 0.2rem;
+}
+.bf-msgs {
+  padding: 0.85rem; overflow-y: auto; flex: 1;
+  display: flex; flex-direction: column; gap: 0.55rem;
+  background: #fbf7ef;
+}
+.bf-msg {
+  max-width: 92%; padding: 0.65rem 0.8rem; border-radius: 14px;
+  font-size: 0.92rem; line-height: 1.4; white-space: pre-wrap;
+}
+.bf-bot { align-self: flex-start; background: #fff; border: 1px solid #e6ddd0; color: #1a2e1a; }
+.bf-user { align-self: flex-end; background: #2f6b3a; color: #fff; }
+.bf-quick {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  padding: 0.55rem 0.75rem; border-top: 1px solid #e6ddd0; background: #fff;
+}
+.bf-quick button {
+  border: 1px solid #e6ddd0; background: #fff6e0; color: #1a2e1a;
+  border-radius: 999px; padding: 0.3rem 0.65rem;
+  font: inherit; font-size: 0.78rem; font-weight: 600; cursor: pointer;
+}
+.bf-quick button:hover { background: #ffe7b0; }
+.bf-form {
+  display: flex; gap: 0.4rem; padding: 0.65rem 0.75rem 0.85rem;
+  border-top: 1px solid #e6ddd0; background: #fff;
+}
+.bf-form input {
+  flex: 1; border: 1px solid #e6ddd0; border-radius: 999px;
+  padding: 0.55rem 0.85rem; font: inherit;
+}
+.bf-form .btn { padding: 0.55rem 0.9rem; border-radius: 999px; }
