@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.v5.css" />
+<link rel="stylesheet" href="styles.v6.css" />
 </head>
 <body>
 <header class="top">
@@ -118,6 +118,13 @@
     </div>
     <p id="shop-msg" class="form-msg" hidden></p>
   </div>
+
+      <div class="ath-pay">
+        <p class="ath-label">Pague con ATH Móvil Business</p>
+        <p class="ath-number"><a href="tel:7875983543">787-598-3543</a></p>
+        <p class="ath-hint">Abra ATH Móvil → Buscar → envíe al negocio <strong>787-598-3543</strong>. Luego mande el comprobante por Instagram @beeforestry o WhatsApp.</p>
+        <a class="btn btn-ath" href="tel:7875983543">Marcar ATH 787-598-3543</a>
+      </div>
 </section>
 
 <section id="digital" class="section section-alt">
@@ -137,6 +144,13 @@
       </ul>
       <p class="price-lg">$20 · entrega digital por correo</p>
       <p class="muted">Ideal si quiere actuar con criterio antes de la visita, o si enseña/apoya un proyecto escolar. Pago por ATH Móvil, cash o cheque — al confirmar, le enviamos el PDF.</p>
+      
+      <div class="ath-pay">
+        <p class="ath-label">Pague con ATH Móvil Business</p>
+        <p class="ath-number"><a href="tel:7875983543">787-598-3543</a></p>
+        <p class="ath-hint">Abra ATH Móvil en su celular → Buscar → envíe al negocio <strong>787-598-3543</strong>. Luego escríbanos por Instagram @beeforestry o WhatsApp con el comprobante.</p>
+        <a class="btn btn-ath" href="tel:7875983543">Llamar / marcar ATH 787-598-3543</a>
+      </div>
       <form id="digital-form">
         <label>Nombre<input name="nombre" required placeholder="Su nombre" /></label>
         <label>Correo<input name="email" type="email" required placeholder="para enviarle el PDF" /></label>
@@ -207,29 +221,160 @@
 </section>
 <section id="contacto" class="section section-alt">
   <div class="wrap narrow">
-    <h2 class="section-title">Solicitar servicio o cotización</h2>
-    <form id="quote-form" class="card form">
-      <label>Nombre<input name="nombre" required /></label>
-      <label>Qué necesita
+    <h2 class="section-title">Cotización de rescate / servicio</h2>
+    <p class="muted section-intro">Complete el formulario. BeeForestry le llama con la información — entre más claros estén municipio, ubicación y fotos, más rápido cotizamos.</p>
+    <form id="quote-form" class="card form quote-form">
+      <label>Nombre completo
+        <input name="nombre" required autocomplete="name" placeholder="Su nombre" />
+      </label>
+      <label>Teléfono / WhatsApp
+        <input name="telefono" type="tel" required autocomplete="tel" placeholder="787-000-0000" />
+      </label>
+      <label>Municipio de Puerto Rico
+        <select name="municipio" required>
+          <option value="">Seleccione municipio…</option>
+          <option value="Adjuntas">Adjuntas</option>
+          <option value="Aguada">Aguada</option>
+          <option value="Aguadilla">Aguadilla</option>
+          <option value="Aguas Buenas">Aguas Buenas</option>
+          <option value="Aibonito">Aibonito</option>
+          <option value="Añasco">Añasco</option>
+          <option value="Arecibo">Arecibo</option>
+          <option value="Arroyo">Arroyo</option>
+          <option value="Barceloneta">Barceloneta</option>
+          <option value="Barranquitas">Barranquitas</option>
+          <option value="Bayamón">Bayamón</option>
+          <option value="Cabo Rojo">Cabo Rojo</option>
+          <option value="Caguas">Caguas</option>
+          <option value="Camuy">Camuy</option>
+          <option value="Canóvanas">Canóvanas</option>
+          <option value="Carolina">Carolina</option>
+          <option value="Cataño">Cataño</option>
+          <option value="Cayey">Cayey</option>
+          <option value="Ceiba">Ceiba</option>
+          <option value="Ciales">Ciales</option>
+          <option value="Cidra">Cidra</option>
+          <option value="Coamo">Coamo</option>
+          <option value="Comerío">Comerío</option>
+          <option value="Corozal">Corozal</option>
+          <option value="Culebra">Culebra</option>
+          <option value="Dorado">Dorado</option>
+          <option value="Fajardo">Fajardo</option>
+          <option value="Florida">Florida</option>
+          <option value="Guánica">Guánica</option>
+          <option value="Guayama">Guayama</option>
+          <option value="Guayanilla">Guayanilla</option>
+          <option value="Guaynabo">Guaynabo</option>
+          <option value="Gurabo">Gurabo</option>
+          <option value="Hatillo">Hatillo</option>
+          <option value="Hormigueros">Hormigueros</option>
+          <option value="Humacao">Humacao</option>
+          <option value="Isabela">Isabela</option>
+          <option value="Jayuya">Jayuya</option>
+          <option value="Juana Díaz">Juana Díaz</option>
+          <option value="Juncos">Juncos</option>
+          <option value="Lajas">Lajas</option>
+          <option value="Lares">Lares</option>
+          <option value="Las Marías">Las Marías</option>
+          <option value="Las Piedras">Las Piedras</option>
+          <option value="Loíza">Loíza</option>
+          <option value="Luquillo">Luquillo</option>
+          <option value="Manatí">Manatí</option>
+          <option value="Maricao">Maricao</option>
+          <option value="Maunabo">Maunabo</option>
+          <option value="Mayagüez">Mayagüez</option>
+          <option value="Moca">Moca</option>
+          <option value="Morovis">Morovis</option>
+          <option value="Naguabo">Naguabo</option>
+          <option value="Naranjito">Naranjito</option>
+          <option value="Orocovis">Orocovis</option>
+          <option value="Patillas">Patillas</option>
+          <option value="Peñuelas">Peñuelas</option>
+          <option value="Ponce">Ponce</option>
+          <option value="Quebradillas">Quebradillas</option>
+          <option value="Rincón">Rincón</option>
+          <option value="Río Grande">Río Grande</option>
+          <option value="Sabana Grande">Sabana Grande</option>
+          <option value="Salinas">Salinas</option>
+          <option value="San Germán">San Germán</option>
+          <option value="San Juan">San Juan</option>
+          <option value="San Lorenzo">San Lorenzo</option>
+          <option value="San Sebastián">San Sebastián</option>
+          <option value="Santa Isabel">Santa Isabel</option>
+          <option value="Toa Alta">Toa Alta</option>
+          <option value="Toa Baja">Toa Baja</option>
+          <option value="Trujillo Alto">Trujillo Alto</option>
+          <option value="Utuado">Utuado</option>
+          <option value="Vega Alta">Vega Alta</option>
+          <option value="Vega Baja">Vega Baja</option>
+          <option value="Vieques">Vieques</option>
+          <option value="Villalba">Villalba</option>
+          <option value="Yabucoa">Yabucoa</option>
+          <option value="Yauco">Yauco</option>
+        </select>
+      </label>
+      <label>Ubicación de la colmena / enjambre
+        <select name="ubicacion" required>
+          <option value="">Seleccione…</option>
+          <option>Techo</option>
+          <option>Pared</option>
+          <option>Árbol</option>
+          <option>Solar / patio</option>
+          <option>Caja eléctrica / medidor</option>
+          <option>Otro</option>
+        </select>
+      </label>
+      <label>Tipo de servicio
         <select name="servicio" required>
           <option value="">Seleccione…</option>
           <option>Rescate / remoción de abejas</option>
           <option>Preparación de agroforestal</option>
           <option>Colmena</option>
           <option>Cajas de abejas</option>
+          <option>Guía digital</option>
           <option>Varios / otro</option>
         </select>
       </label>
-      <label>Municipio<input name="municipio" required placeholder="Ej. Cidra" /></label>
-      <label>Detalle (ubicación de abejas, tamaño del solar, etc.)<textarea name="detalle" rows="3" required></textarea></label>
-      <label>Teléfono<input name="telefono" type="tel" required /></label>
-      <button class="btn" type="submit">Enviar solicitud</button>
+      <label>Descripción breve
+        <textarea name="detalle" rows="3" required placeholder="Altura, acceso, comportamiento, si hay niños o mascotas…"></textarea>
+      </label>
+      <label>Fotos del caso (recomendadas)
+        <input name="fotos" type="file" accept="image/*" multiple />
+      </label>
+      <label>Enlace a fotos (opcional)
+        <input name="fotos_url" type="url" placeholder="https://… Drive, Imgur, etc." />
+      </label>
+      <button class="btn" type="submit">Enviar cotización</button>
       <p id="form-msg" class="form-msg" hidden></p>
     </form>
   </div>
 </section>
 </main>
 
+
+<section id="testimonios" class="section">
+  <div class="wrap">
+    <h2 class="section-title">Lo que dicen en Puerto Rico</h2>
+    <p class="muted section-intro">Rescates y proyectos agroforestales — voces de quienes ya trabajaron con BeeForestry.</p>
+    <div class="testimonials">
+      <article class="card testimonial">
+        <p class="stars" aria-label="5 de 5">★★★★★</p>
+        <p>“Teníamos un panal en la pared del garage en Caguas. Pensamos en exterminio, pero BeeForestry lo sacó y se llevaron las abejas. Mi hija pudo volver a usar el patio.”</p>
+        <p class="who">— Marisol R. · Caguas · rescate</p>
+      </article>
+      <article class="card testimonial">
+        <p class="stars" aria-label="5 de 5">★★★★★</p>
+        <p>“Nos ayudaron a diseñar un borde melífero y sombra en la finca. Quedó claro qué plantar primero y dónde iría la colmena. Muy práctico, no teoría suelta.”</p>
+        <p class="who">— Luis &amp; Ana · Cayey · agroforestería</p>
+      </article>
+      <article class="card testimonial">
+        <p class="stars" aria-label="5 de 5">★★★★★</p>
+        <p>“Enjambre en el techo un domingo. Contestaron rápido, pidieron fotos y cotizaron sin presión. El trabajo fue limpio y sin químicos. Los recomiendo.”</p>
+        <p class="who">— Héctor M. · Bayamón · rescate</p>
+      </article>
+    </div>
+  </div>
+</section>
 <footer class="footer">
   <div class="wrap">
     <p><strong>BeeForestry</strong> · Servicios, agroforestería y apicultura en Puerto Rico</p>
@@ -238,7 +383,7 @@
   </div>
 </footer>
 
-<script src="app.v5.js"></script>
-<script src="assistant.v5.js"></script>
+<script src="app.v6.js"></script>
+<script src="assistant.v6.js"></script>
 </body>
 </html>
