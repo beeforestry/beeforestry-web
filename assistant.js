@@ -4,7 +4,7 @@
   var EMAIL = "Beeforestry@gmail.com";
   var LEAD_URL = "https://formsubmit.co/ajax/" + EMAIL;
 
-  function stripAccents(s) {
+  function strip(s) {
     return String(s || "")
       .toLowerCase()
       .replace(/[áàäâ]/g, "a")
@@ -15,200 +15,198 @@
       .replace(/ñ/g, "n");
   }
 
-  function answer(input) {
-    var q = stripAccents(input);
-    if (!q.trim()) return "Complete el formulario con su teléfono y, si puede, fotos. Así BeeForestry le llama.";
+  function replyTo(text) {
+    var q = strip(text);
+    if (/hola|buenas|saludos|hey/.test(q))
+      return "¡Hola! Soy el chat de BeeForestry. ¿En qué le ayudo: rescate de abejas, agroforestería, tienda, guía o escuelas?";
     if (/rescate|remoci|reubic|enjambre|colonia|abeja|panal|quitar/.test(q))
-      return "Rescate/reubicación (sin exterminio). Deje teléfono y fotos abajo; le llamamos pronto.";
+      return "Rescatamos y reubicamos (no exterminamos). Si me deja su teléfono y unas fotos, Sebastian le llama pronto.";
     if (/agro|forest|finca|solar|siembra/.test(q))
-      return "Agroforestería: deje nombre, teléfono y municipio abajo. Fotos del terreno ayudan.";
-    if (/colmena|caja|apiario|tienda|equipo/.test(q))
-      return "Colmenas/cajas: deje su teléfono abajo para confirmar disponibilidad.";
+      return "Hacemos preparación de agroforestales. Déjeme teléfono y municipio y le contactamos.";
+    if (/colmena|caja|tienda|equipo/.test(q))
+      return "Tenemos colmenas y cajas según temporada. ¿Me deja un teléfono para confirmarle disponibilidad?";
     if (/guia|digital|pdf|manual|\b20\b/.test(q))
-      return "Guía digital $20: deje nombre, teléfono y correo abajo y coordinamos el envío.";
+      return "La guía digital cuesta $20. Déjeme nombre y teléfono (y correo si quiere) y coordinamos el envío.";
     if (/escuela|colegio|volunt|colabor|taller/.test(q))
-      return "Escuelas/voluntariado: deje teléfono y un breve detalle abajo.";
-    if (/instagram|\big\b|\bdm\b/.test(q))
-      return "Instagram @beeforestry — " + IG + ". Aun así, deje teléfono aquí para poder llamarle.";
+      return "¡Qué bueno! Para escuelas y voluntariado déjeme teléfono y un breve detalle.";
+    if (/instagram|\big\b|dm/.test(q))
+      return "Estamos en Instagram @beeforestry. También puede dejar teléfono aquí para llamada directa.";
     if (/precio|cuesta|costo|cotiz/.test(q))
-      return "Para cotizar necesitamos teléfono y fotos. Complételos abajo y le llamamos.";
+      return "Para cotizar bien necesitamos fotos y un teléfono de contacto. ¿Me los puede dejar aquí abajo?";
     if (/extermin|matar|veneno|fumig/.test(q))
-      return "No exterminamos: rescatamos y reubicamos. Deje teléfono y fotos abajo.";
-    return "Deje su teléfono y fotos abajo para que BeeForestry le contacte. También: " + PHONE + " · @beeforestry";
+      return "No exterminamos: rescatamos y reubicamos. ¿Quiere que le llamemos? Deje su teléfono.";
+    if (/gracias/.test(q))
+      return "Con gusto. Cuando quiera, deje su teléfono abajo y le llamamos.";
+    return "Puedo orientarle sobre rescate, agroforestería, tienda, guía ($20) o escuelas. Si deja su teléfono abajo, Sebastian le llama personalmente.";
   }
 
   var root = document.createElement("div");
-  root.id = "bf-assistant";
+  root.id = "bf-chat";
   root.innerHTML =
-    '<button type="button" class="bf-hex" aria-label="Abrir mensaje de BeeForestry" aria-expanded="false">' +
-      '<span class="bf-hex-shape" aria-hidden="true">' +
-        '<span class="bf-hex-bee">🐝</span>' +
-        '<span class="bf-badge" id="bf-badge">1</span>' +
-      '</span>' +
-      '<span class="bf-hex-hint">1 mensaje</span>' +
+    '<button type="button" class="bf-bubble" aria-label="Abrir chat de BeeForestry" aria-expanded="false">' +
+      '<span class="bf-bubble-icon" aria-hidden="true">💬</span>' +
+      '<span class="bf-bubble-dot" id="bf-dot" aria-hidden="true"></span>' +
     '</button>' +
-    '<div class="bf-panel" id="bf-panel" hidden role="dialog" aria-label="Contacto BeeForestry">' +
-      '<header class="bf-head">' +
-        '<div><strong>BeeForestry</strong><p>Teléfono y fotos para atenderle</p></div>' +
-        '<button type="button" class="bf-close" aria-label="Cerrar">×</button>' +
+    '<section class="bf-window" id="bf-window" hidden role="dialog" aria-label="Chat BeeForestry">' +
+      '<header class="bf-win-head">' +
+        '<div class="bf-win-title">' +
+          '<span class="bf-avatar" aria-hidden="true">🐝</span>' +
+          '<div><strong>BeeForestry</strong><p>Soporte · suele responder pronto</p></div>' +
+        '</div>' +
+        '<button type="button" class="bf-win-close" aria-label="Cerrar chat">×</button>' +
       '</header>' +
-      '<div class="bf-msgs" id="bf-msgs"></div>' +
-      '<form class="bf-lead" id="bf-lead">' +
-        '<p class="bf-lead-title">Para llamarle lo antes posible</p>' +
-        '<input name="nombre" required placeholder="Su nombre *" autocomplete="name" />' +
-        '<input name="telefono" required type="tel" placeholder="Teléfono / celular *" autocomplete="tel" />' +
-        '<input name="municipio" placeholder="Municipio" />' +
-        '<select name="motivo">' +
-          '<option value="Rescate / reubicación">Rescate / reubicación</option>' +
-          '<option value="Agroforestería">Agroforestería</option>' +
-          '<option value="Colmenas / cajas">Colmenas / cajas</option>' +
-          '<option value="Guía digital $20">Guía digital $20</option>' +
-          '<option value="Escuela / voluntariado">Escuela / voluntariado</option>' +
-          '<option value="Otro">Otro</option>' +
-        '</select>' +
-        '<label class="bf-photos-label">Fotos del caso (recomendadas)' +
-          '<input name="attachment" type="file" accept="image/*" multiple />' +
-        '</label>' +
-        '<textarea name="detalle" rows="2" placeholder="¿Dónde están las abejas u otro detalle?"></textarea>' +
-        '<button class="btn" type="submit">Enviar para que me llamen</button>' +
-        '<p class="bf-lead-msg" id="bf-lead-msg" hidden></p>' +
-        '<p class="bf-fine">También: ' + PHONE + ' · <a href="' + IG + '" target="_blank" rel="noopener">@beeforestry</a></p>' +
+      '<div class="bf-win-body" id="bf-body"></div>' +
+      '<div class="bf-chips" id="bf-chips">' +
+        '<button type="button" data-q="Necesito rescate de abejas">Rescate</button>' +
+        '<button type="button" data-q="Agroforestería">Agro</button>' +
+        '<button type="button" data-q="Colmenas o cajas">Tienda</button>' +
+        '<button type="button" data-q="Guía digital $20">Guía</button>' +
+        '<button type="button" data-q="Escuela o voluntariado">Escuelas</button>' +
+      '</div>' +
+      '<form class="bf-contact" id="bf-contact">' +
+        '<p class="bf-contact-label">Para llamarle (opcional pero útil)</p>' +
+        '<div class="bf-contact-row">' +
+          '<input name="nombre" placeholder="Nombre" autocomplete="name" />' +
+          '<input name="telefono" type="tel" placeholder="Teléfono" autocomplete="tel" required />' +
+        '</div>' +
+        '<input name="municipio" placeholder="Municipio (opcional)" />' +
+        '<label class="bf-file">Fotos (opcional)<input name="attachment" type="file" accept="image/*" multiple /></label>' +
+        '<button type="submit" class="bf-send-lead">Enviar contacto</button>' +
+        '<p class="bf-contact-msg" id="bf-contact-msg" hidden></p>' +
       '</form>' +
-    '</div>';
+      '<form class="bf-composer" id="bf-composer">' +
+        '<input name="msg" type="text" placeholder="Escriba su mensaje…" autocomplete="off" aria-label="Mensaje" />' +
+        '<button type="submit" aria-label="Enviar">➤</button>' +
+      '</form>' +
+    '</section>';
 
   function mount() {
-    if (!document.body || document.getElementById("bf-assistant")) return;
+    if (!document.body || document.getElementById("bf-chat")) return;
     document.body.appendChild(root);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
   else mount();
 
-  var fab = root.querySelector(".bf-hex");
-  var panel = root.querySelector("#bf-panel");
-  var badge = root.querySelector("#bf-badge");
-  var hint = root.querySelector(".bf-hex-hint");
-  var msgs = root.querySelector("#bf-msgs");
-  var leadForm = root.querySelector("#bf-lead");
-  var leadMsg = root.querySelector("#bf-lead-msg");
-  var openedOnce = false;
+  var bubble = root.querySelector(".bf-bubble");
+  var win = root.querySelector("#bf-window");
+  var body = root.querySelector("#bf-body");
+  var dot = root.querySelector("#bf-dot");
+  var composer = root.querySelector("#bf-composer");
+  var contact = root.querySelector("#bf-contact");
+  var contactMsg = root.querySelector("#bf-contact-msg");
+  var greeted = false;
+  var askedContact = false;
 
-  function addMsg(text, who) {
+  function addBubble(text, who) {
     var el = document.createElement("div");
-    el.className = "bf-msg bf-" + who;
+    el.className = "bf-line bf-" + who;
     el.textContent = text;
-    msgs.appendChild(el);
-    msgs.scrollTop = msgs.scrollHeight;
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
   }
 
-  function openPanel() {
-    panel.hidden = false;
-    fab.setAttribute("aria-expanded", "true");
+  function openChat() {
+    win.hidden = false;
+    bubble.setAttribute("aria-expanded", "true");
     root.classList.add("bf-open");
-    if (badge) badge.hidden = true;
-    if (hint) hint.textContent = "BeeForestry";
-    if (!openedOnce) {
-      addMsg(
-        "Para atenderle rápido necesitamos su teléfono y, si puede, fotos del enjambre o del lugar. Complete el formulario y BeeForestry le llama.",
-        "bot"
-      );
-      openedOnce = true;
+    if (dot) dot.hidden = true;
+    if (!greeted) {
+      addBubble("¡Hola! Bienvenido a BeeForestry. ¿En qué podemos ayudarle hoy?", "bot");
+      greeted = true;
     }
-    var tel = leadForm.querySelector('[name="telefono"]');
-    if (tel) setTimeout(function () { tel.focus(); }, 150);
+    composer.msg.focus();
   }
 
-  function closePanel() {
-    panel.hidden = true;
-    fab.setAttribute("aria-expanded", "false");
+  function closeChat() {
+    win.hidden = true;
+    bubble.setAttribute("aria-expanded", "false");
     root.classList.remove("bf-open");
   }
 
-  fab.addEventListener("click", function () {
-    if (panel.hidden) openPanel();
-    else closePanel();
+  bubble.addEventListener("click", function () {
+    if (win.hidden) openChat();
+    else closeChat();
   });
-  root.querySelector(".bf-close").addEventListener("click", closePanel);
+  root.querySelector(".bf-win-close").addEventListener("click", function (e) {
+    e.stopPropagation();
+    closeChat();
+  });
 
-  setTimeout(function () {
-    try {
-      if (!sessionStorage.getItem("bf-assist-opened")) {
-        openPanel();
-        sessionStorage.setItem("bf-assist-opened", "1");
-      }
-    } catch (e) {
-      openPanel();
-    }
-  }, 800);
+  function maybeAskContact() {
+    if (askedContact) return;
+    askedContact = true;
+    setTimeout(function () {
+      addBubble(
+        "Si quiere que Sebastian le llame personalmente, deje su teléfono (y fotos si tiene) en la tarjeta de abajo. Puede cerrar este chat cuando quiera.",
+        "bot"
+      );
+    }, 450);
+  }
 
-  leadForm.addEventListener("submit", function (e) {
+  function handleUser(text) {
+    addBubble(text, "user");
+    setTimeout(function () {
+      addBubble(replyTo(text), "bot");
+      maybeAskContact();
+    }, 350);
+  }
+
+  root.querySelectorAll("#bf-chips [data-q]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      handleUser(btn.getAttribute("data-q"));
+    });
+  });
+
+  composer.addEventListener("submit", function (e) {
     e.preventDefault();
-    var fd = new FormData(leadForm);
+    var t = String(composer.msg.value || "").trim();
+    if (!t) return;
+    composer.msg.value = "";
+    handleUser(t);
+  });
+
+  contact.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var fd = new FormData(contact);
     var nombre = String(fd.get("nombre") || "").trim();
     var telefono = String(fd.get("telefono") || "").trim();
-    if (!nombre || !telefono) {
-      leadMsg.hidden = false;
-      leadMsg.textContent = "Nombre y teléfono son obligatorios.";
+    if (!telefono) {
+      contactMsg.hidden = false;
+      contactMsg.textContent = "El teléfono es necesario para llamarle.";
       return;
     }
-
-    fd.append("_subject", "BeeForestry web — LLAMAR cliente");
+    fd.append("_subject", "BeeForestry chat — LLAMAR cliente");
     fd.append("_template", "table");
-    fd.append("fuente", "burbuja-hexagono");
+    fd.append("fuente", "chat-burbuja");
     fd.append("pagina", location.href);
-    fd.append("nota_asistente", answer(String(fd.get("motivo") || "") + " " + String(fd.get("detalle") || "")));
+    if (nombre) fd.set("nombre", nombre);
 
-    try {
-      localStorage.setItem(
-        "beeforestry-web-leads",
-        JSON.stringify(
-          [{
-            nombre: nombre,
-            telefono: telefono,
-            municipio: fd.get("municipio"),
-            motivo: fd.get("motivo"),
-            detalle: fd.get("detalle"),
-            at: new Date().toISOString()
-          }].concat(JSON.parse(localStorage.getItem("beeforestry-web-leads") || "[]")).slice(0, 40)
-        )
-      );
-    } catch (err) {}
-
-    var btn = leadForm.querySelector('button[type="submit"]');
+    var btn = contact.querySelector('button[type="submit"]');
     btn.disabled = true;
-    btn.textContent = "Enviando…";
-    leadMsg.hidden = false;
-    leadMsg.textContent = "Enviando su contacto…";
+    contactMsg.hidden = false;
+    contactMsg.textContent = "Enviando…";
 
-    fetch(LEAD_URL, {
-      method: "POST",
-      body: fd,
-      headers: { Accept: "application/json" }
-    })
-      .then(function (res) {
-        if (!res.ok) throw new Error("fail");
-        leadMsg.textContent = "Gracias. Ya tenemos su teléfono — BeeForestry le llamará pronto.";
-        addMsg("Recibimos su número (" + telefono + "). Si adjuntó fotos, también nos llegan. ¡Gracias!", "bot");
-        leadForm.reset();
-        if (badge) badge.hidden = true;
+    fetch(LEAD_URL, { method: "POST", body: fd, headers: { Accept: "application/json" } })
+      .then(function (r) {
+        if (!r.ok) throw new Error("fail");
+        contactMsg.textContent = "¡Listo! Le llamaremos pronto.";
+        addBubble("Recibimos su teléfono (" + telefono + "). Sebastian le contactará lo antes posible. ¡Gracias!", "bot");
+        contact.reset();
       })
       .catch(function () {
         var body =
           "Nombre: " + nombre +
           "\nTeléfono: " + telefono +
           "\nMunicipio: " + (fd.get("municipio") || "") +
-          "\nMotivo: " + (fd.get("motivo") || "") +
-          "\nDetalle: " + (fd.get("detalle") || "") +
-          "\n(Envíe fotos por Instagram @beeforestry si no se adjuntaron)";
-        window.location.href =
+          "\n(Fotos por Instagram @beeforestry si no se adjuntaron)";
+        location.href =
           "mailto:" + EMAIL +
-          "?subject=" + encodeURIComponent("BeeForestry web — LLAMAR cliente") +
+          "?subject=" + encodeURIComponent("BeeForestry chat — LLAMAR cliente") +
           "&body=" + encodeURIComponent(body);
-        leadMsg.textContent = "Si no se abrió el correo, llame al " + PHONE + " o Instagram @beeforestry.";
-        addMsg("También puede enviarnos fotos por Instagram @beeforestry con su teléfono en el mensaje.", "bot");
+        contactMsg.textContent = "Si no se abrió el correo, escriba a @beeforestry o llame al " + PHONE;
       })
       .finally(function () {
         btn.disabled = false;
-        btn.textContent = "Enviar para que me llamen";
       });
   });
 })();
