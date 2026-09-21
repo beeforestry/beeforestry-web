@@ -287,7 +287,8 @@ dialog {
   right: 0;
   bottom: 4.6rem;
   width: min(360px, calc(100vw - 1.4rem));
-  height: min(560px, 72vh);
+  height: min(520px, 68vh);
+  max-height: calc(100vh - 6.5rem);
   background: #fff;
   border-radius: 18px;
   border: 1px solid #e6ddd0;
@@ -451,3 +452,8 @@ dialog {
   min-width: 44px;
   min-height: 44px;
 }
+
+/* Force chat closed unless opened by the bubble */
+.bf-window[hidden] { display: none !important; }
+#bf-chat:not(.bf-open) .bf-window { display: none !important; }
+#bf-chat.bf-open .bf-window { display: flex !important; }
