@@ -18,7 +18,7 @@
   function replyTo(text) {
     var q = strip(text);
     if (/hola|buenas|saludos|hey/.test(q))
-      return "¡Hola! Soy el chat de BeeForestry. ¿En qué le ayudo: rescate de abejas, agroforestería, tienda, guía o escuelas?";
+      return "¡Hola! Soy el chat de BeeForestry. ¿En qué le ayudo: rescate de abejas, agroforestería, tienda o escuelas?";
     if (/rescate|remoci|reubic|enjambre|colonia|abeja|panal|quitar/.test(q))
       return "Rescatamos y reubicamos (no exterminamos). Si me deja su teléfono y unas fotos, Sebastian le llama pronto.";
     if (/agro|forest|finca|solar|siembra/.test(q))
@@ -26,7 +26,7 @@
     if (/colmena|caja|tienda|equipo/.test(q))
       return "Tenemos colmenas y cajas según temporada. ¿Me deja un teléfono para confirmarle disponibilidad?";
     if (/guia|digital|pdf|manual|\b20\b/.test(q))
-      return "La guía digital cuesta $20. Déjeme nombre y teléfono (y correo si quiere) y coordinamos el envío.";
+      return "Por ahora no estamos tomando pedidos de materiales educativos. Con gusto puedo orientarle sobre rescate, agroforestería, colmenas o cajas.";
     if (/escuela|colegio|volunt|colabor|taller/.test(q))
       return "¡Qué bueno! Para escuelas y voluntariado déjeme teléfono y un breve detalle.";
     if (/instagram|\big\b|dm/.test(q))
@@ -37,7 +37,7 @@
       return "No exterminamos: rescatamos y reubicamos. ¿Quiere que le llamemos? Deje su teléfono.";
     if (/gracias/.test(q))
       return "Con gusto. Cuando quiera, deje su teléfono abajo y le llamamos.";
-    return "Puedo orientarle sobre rescate, agroforestería, tienda, guía ($20) o escuelas. Si deja su teléfono abajo, Sebastian le llama personalmente.";
+    return "Puedo orientarle sobre rescate, agroforestería, tienda o escuelas. Si deja su teléfono abajo, Sebastian le llama personalmente.";
   }
 
   var root = document.createElement("div");
@@ -60,7 +60,6 @@
         '<button type="button" data-q="Necesito rescate de abejas">Rescate</button>' +
         '<button type="button" data-q="Agroforestería">Agro</button>' +
         '<button type="button" data-q="Colmenas o cajas">Tienda</button>' +
-        '<button type="button" data-q="Guía digital $20">Guía</button>' +
         '<button type="button" data-q="Escuela o voluntariado">Escuelas</button>' +
       '</div>' +
       '<form class="bf-contact" id="bf-contact">' +

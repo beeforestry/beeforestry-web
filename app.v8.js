@@ -33,17 +33,6 @@ document.querySelectorAll("[data-interest]").forEach((btn) => {
   });
 });
 
-document.querySelector("#digital-form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(e.target).entries());
-  pushLead({ type: "compra-guia-digital", product: "Guía BeeForestry $20", ...data });
-  e.target.reset();
-  show(
-    document.querySelector("#digital-msg"),
-    "Pedido registrado. Le contactamos para coordinar el pago (ATH Móvil, cash o cheque) y enviarle el PDF."
-  );
-});
-
 document.querySelector("#collab-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(e.target).entries());
