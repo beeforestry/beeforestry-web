@@ -504,27 +504,20 @@ dialog {
 }
 .btn-ath:hover { background: #a56a08 !important; }
 
-/* Testimonials */
-.testimonials {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
+/* Casos recientes (agregar más <article class="card case"> dentro de .cases) */
+.cases {
+  display: grid; gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 }
-.testimonial .stars {
-  margin: 0 0 0.5rem;
-  color: #c47f0a;
-  letter-spacing: 0.08em;
+.case h3 { margin: 0 0 0.5rem; font-size: 1.1rem; }
+.case p { margin: 0; color: var(--muted); }
+.case .case-place {
+  display: inline-block; margin: 0 0 0.6rem;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--leaf-deep); background: #e8f2ea; border-radius: 999px; padding: 0.25rem 0.65rem;
 }
-.testimonial p { margin: 0 0 0.75rem; color: var(--ink, #1a2e1a); }
-.testimonial .who {
-  margin: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--muted, #5a6b5a);
-}
-@media (max-width: 800px) {
-  .testimonials { grid-template-columns: 1fr; }
-}
+.cases-more { margin: 1.25rem 0 0; color: var(--muted); }
+.anchor-alias { display: block; position: relative; top: -80px; visibility: hidden; }
 
 .product-call {
   margin: 0.55rem 0 0;
