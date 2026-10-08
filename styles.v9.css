@@ -873,3 +873,248 @@ select:focus-visible, input:focus-visible, textarea:focus-visible {
   .footer-tag::before { content: none; }
 }
 .footer::before { top: -2px; }
+
+/* =====================================================================
+   v9 · Pulido 2: Cómo funciona, agro, tienda, colabora, contacto, detalles
+   ===================================================================== */
+.wrap { width: min(1180px, 92vw); }
+.narrow { width: min(700px, 92vw); }
+html { scroll-padding-top: 92px; }
+h1 { font-size: clamp(2.1rem, 4.3vw, 3.35rem); }
+.section-title { font-size: clamp(1.65rem, 2.6vw, 2.2rem); }
+.section-intro { margin-top: -0.25rem; }
+
+/* Header: más vidrio y sombra al hacer scroll; menú activo */
+.top { transition: background-color .25s, box-shadow .25s, backdrop-filter .25s; box-shadow: none; }
+.top.is-scrolled {
+  background: rgba(251, 247, 239, 0.82);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: 0 8px 24px rgba(26, 46, 26, 0.08);
+}
+nav a:not(.btn) { position: relative; padding: 0.25rem 0; }
+nav a:not(.btn)::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 2px; border-radius: 2px;
+  background: var(--honey); transform: scaleX(0); transform-origin: left; transition: transform .25s ease;
+}
+nav a:not(.btn):hover::after, nav a.is-active::after { transform: scaleX(1); }
+nav a.is-active { color: var(--leaf-deep); }
+
+/* Botones: estado presionado */
+.btn:active { translate: 0 1px; box-shadow: 0 3px 8px rgba(47, 107, 58, 0.18); }
+.btn-ghost:active, .btn-wa-outline:active { box-shadow: none; }
+
+/* ---------- Hero con foto real (sin texto impreso) ---------- */
+.hero-grid { grid-template-columns: 1.05fr 1fr; gap: 3rem; }
+.hero-deco { opacity: 0.34; }
+.hero-art { padding: 1.5rem 0.5rem 2.5rem; }
+.hero-visual { rotate: 1.4deg; }
+.hero-visual img { aspect-ratio: 1080 / 675; height: auto; }
+.hero-bee { top: -26px; left: -46px; }
+.hero-leaf { right: -22px; bottom: 6px; }
+.hero-badge {
+  position: absolute; left: -14px; bottom: 0.4rem; z-index: 3;
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.7rem 1rem 0.7rem 0.75rem; border-radius: 18px;
+  background: #fff; border: 1px solid #efe3cc;
+  box-shadow: 0 14px 30px rgba(26, 46, 26, 0.16);
+  rotate: -1.5deg;
+}
+.hero-badge-ico {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px;
+  background: linear-gradient(145deg, #fff3d6, #f9dc94); color: var(--leaf-deep);
+}
+.hero-badge strong { display: block; font-size: 0.95rem; color: var(--ink); line-height: 1.2; }
+.hero-badge small { display: block; font-size: 0.82rem; color: var(--leaf-deep); font-weight: 600; }
+
+/* ---------- Cómo funciona ---------- */
+.scribble { position: relative; z-index: 0; white-space: nowrap; }
+.scribble::after {
+  content: ""; position: absolute; z-index: -1; left: -3%; right: -3%; bottom: -0.2em; height: 0.45em;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M3 13c30-6 62-8 96-6 30 2 60 3 98-4M8 17c40-5 90-6 150-3' fill='none' stroke='%23e8a317' stroke-width='3.2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+}
+.steps {
+  list-style: none; margin: 1rem 0 0; padding: 0; position: relative;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+.steps::before {
+  content: ""; position: absolute; top: 40px; left: 16.6%; right: 16.6%; height: 3px; z-index: 0;
+  background: repeating-linear-gradient(90deg, var(--honey) 0 10px, transparent 10px 18px);
+  opacity: 0.8;
+}
+.step { position: relative; z-index: 1; text-align: center; padding: 0 0.5rem; }
+.step-ico {
+  position: relative; display: inline-grid; place-items: center;
+  width: 80px; height: 80px; margin-bottom: 1rem; border-radius: 50%;
+  background: #fff; color: var(--leaf-deep);
+  border: 2px solid #f0d79a; box-shadow: 0 0 0 8px var(--alt), var(--shadow-sm);
+}
+.step-num {
+  position: absolute; top: -4px; right: -6px; width: 28px; height: 28px; border-radius: 50%;
+  display: grid; place-items: center; font-weight: 700; font-size: 0.9rem;
+  background: var(--honey); color: var(--ink); box-shadow: 0 4px 10px rgba(196, 127, 10, 0.3);
+}
+.step h3 { margin: 0 0 0.4rem; font-size: 1.15rem; }
+.step p { margin: 0 auto; color: var(--muted); max-width: 30ch; }
+.steps-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 2.25rem; }
+
+/* ---------- Agroforestería ---------- */
+#agro { overflow: hidden; }
+#agro::after {
+  content: ""; position: absolute; right: -60px; bottom: -40px; width: 340px; height: 340px; pointer-events: none; opacity: 0.08;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cpath d='M10 70C10 36 32 14 70 10c0 38-22 60-60 60z' fill='%232f6b3a'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+.agro-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: 3rem; align-items: center; position: relative; z-index: 1; }
+.agro-lede { font-size: 1.05rem; color: var(--ink); opacity: 0.88; margin: 0 0 1.5rem; }
+.agro-cta { display: flex; gap: 1rem; align-items: flex-start; }
+.agro-cta .svc-ico { flex: none; margin: 0; }
+.agro-cta h3 { margin: 0 0 0.3rem; }
+.agro-cta p { margin: 0 0 0.9rem; color: var(--muted); }
+.agro-tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.agro-tile {
+  position: relative; background: #fff; border: 1px solid #eadfcd; border-radius: var(--radius-lg);
+  padding: 1.3rem 1.2rem 1.25rem; box-shadow: var(--shadow-sm);
+  transition: translate .25s ease, box-shadow .25s ease;
+}
+.agro-tile:nth-child(even) { translate: 0 1.5rem; }
+.agro-tile:hover { box-shadow: var(--shadow-md); }
+.agro-tile h3 { margin: 0; font-size: 1.02rem; line-height: 1.35; }
+.agro-num {
+  position: absolute; top: 0.9rem; right: 1.1rem;
+  font-family: Fraunces, Georgia, serif; font-weight: 700; font-size: 1.6rem; color: #b07a12;
+}
+
+/* ---------- Tienda ---------- */
+.products { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; gap: 1.5rem; }
+.product.card { padding: 0; }
+.product-visual {
+  position: relative; display: grid; place-items: center; height: 180px; overflow: hidden;
+  background: radial-gradient(70% 90% at 50% 100%, #fde6a8 0%, #fff6df 70%);
+  border-bottom: 1px solid #f0e2c2;
+}
+.product-visual::before {
+  content: ""; position: absolute; inset: 0; opacity: 0.35; pointer-events: none;
+  background-image: var(--honeycomb); background-size: 28px 49px;
+}
+.product-art { position: relative; width: 170px; height: auto; transition: transform .5s cubic-bezier(.2, .7, .2, 1); }
+.product:hover .product-art { transform: translateY(-4px) scale(1.03); }
+.product-visual .pill { position: absolute; top: 0.9rem; left: 0.9rem; margin: 0; }
+.product-body { padding: 1.3rem 1.4rem 1.4rem; }
+.product-body h3 { font-family: Fraunces, Georgia, serif; font-size: 1.4rem; margin: 0 0 0.4rem; }
+.product-body > p { color: var(--muted); }
+.price { margin: 0.8rem 0 1rem; }
+.product-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+/* ---------- Dos columnas: Colabora y Contacto ---------- */
+.two-col { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: 3rem; align-items: start; }
+.col-intro { position: sticky; top: 100px; }
+.mini-tiles { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.mini-tiles li {
+  display: flex; align-items: center; gap: 0.7rem; padding: 0.75rem 0.85rem;
+  background: #fff; border: 1px solid #eadfcd; border-radius: 16px; box-shadow: var(--shadow-sm);
+  font-weight: 600; font-size: 0.95rem;
+}
+.mini-tiles .svc-ico, .contact-list .svc-ico { width: 40px; height: 40px; margin: 0; border-radius: 12px; flex: none; }
+
+/* Formularios */
+.form-pro { position: relative; overflow: hidden; padding: 1.9rem 1.8rem; gap: 1rem; }
+.form-pro::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px;
+  background: linear-gradient(90deg, var(--leaf), var(--honey));
+}
+.form-title { margin: 0 0 0.2rem; font-family: Fraunces, Georgia, serif; font-size: 1.35rem; font-weight: 700; color: var(--ink); }
+.form label { color: #4d5d4d; }
+select, input, textarea {
+  background: #fffdf8; border: 1.5px solid #e3d6bd; padding: 0.7rem 0.85rem;
+}
+select:hover, input:hover, textarea:hover { border-color: #cdb98f; }
+select:focus-visible, input:focus-visible, textarea:focus-visible {
+  border-color: var(--leaf); background: #fff;
+  box-shadow: 0 0 0 4px rgba(232, 163, 23, 0.32);
+}
+@media (min-width: 640px) {
+  .quote-form { grid-template-columns: 1fr 1fr; column-gap: 1rem; }
+  .quote-form > * { grid-column: 1 / -1; }
+  .quote-form > .half { grid-column: auto; }
+}
+.info-card { margin-top: 1.5rem; padding: 1.4rem 1.4rem 1.2rem; }
+.info-title { margin: 0 0 0.6rem; font-weight: 700; color: var(--ink); }
+.checklist { list-style: none; margin: 0 0 1.2rem; padding: 0; }
+.checklist li { position: relative; padding-left: 1.75rem; margin: 0.45rem 0; color: var(--ink); }
+.checklist li::before {
+  content: ""; position: absolute; left: 0; top: 0.2em; width: 1.15rem; height: 1.15rem; border-radius: 50%;
+  background: var(--leaf) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 70% no-repeat;
+}
+.contact-list { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 0.5rem; }
+.contact-list a {
+  display: flex; align-items: center; gap: 0.75rem; padding: 0.45rem 0.55rem; border-radius: 14px;
+  color: var(--ink); font-weight: 600; text-decoration: none; transition: background-color .2s;
+}
+.contact-list a:hover { background: #fff7e3; text-decoration: none; }
+.contact-list .wa-ico { margin: 0; }
+.info-hours { display: flex; align-items: center; gap: 0.5rem; margin: 0; padding-top: 0.9rem; border-top: 1px dashed #e8d6ad; color: var(--leaf-deep); font-weight: 600; font-size: 0.92rem; }
+
+/* Galería con fotos recortadas (sin texto impreso) */
+.gallery img, .gallery figure:nth-child(2) img { aspect-ratio: 1.6 / 1; object-position: 50% 50%; }
+
+/* ---------- Móvil ---------- */
+@media (max-width: 960px) {
+  .agro-grid, .two-col { grid-template-columns: 1fr; gap: 2rem; }
+  .col-intro { position: static; }
+  .agro-tile:nth-child(even) { translate: none; }
+}
+@media (max-width: 800px) {
+  html { scroll-padding-top: 80px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+  .hero-art { padding: 1rem 0.25rem 2.25rem; }
+  .hero-badge { left: 4px; bottom: 0.2rem; padding: 0.55rem 0.85rem 0.55rem 0.6rem; }
+  .hero-badge-ico { width: 38px; height: 38px; }
+  .hero-bee { width: 80px; left: auto; right: 2px; top: -30px; }
+  .steps { grid-template-columns: 1fr; gap: 1.6rem; }
+  .steps::before { top: 40px; bottom: 40px; left: 39px; right: auto; width: 3px; height: auto;
+    background: repeating-linear-gradient(180deg, var(--honey) 0 10px, transparent 10px 18px); }
+  .step { display: grid; grid-template-columns: 80px 1fr; column-gap: 1rem; text-align: left; padding: 0; align-items: center; }
+  .step-ico { grid-row: span 2; margin: 0; }
+  .step h3 { align-self: end; }
+  .step p { margin: 0; align-self: start; }
+  .agro-tiles, .mini-tiles { grid-template-columns: 1fr 1fr; }
+  .products { grid-template-columns: 1fr; }
+  .form-pro { padding: 1.5rem 1.15rem; }
+  /* Chat: sin burbuja flotante en móvil (tapaba contenido); se abre desde la barra inferior */
+  #bf-chat .bf-bubble { display: none !important; }
+  #bf-chat { right: 0.5rem; bottom: calc(78px + env(safe-area-inset-bottom)); }
+  #bf-chat .bf-window { bottom: 0 !important; right: 0; }
+  .mobile-cta { grid-template-columns: 1fr 1fr 52px; }
+  .mobile-cta-chat {
+    display: grid; place-items: center; min-height: 48px; border-radius: 999px; cursor: pointer;
+    background: #fff; color: var(--leaf-deep); border: 1.5px solid #d9cba9; font: inherit;
+  }
+}
+@media (max-width: 420px) {
+  .agro-tiles, .mini-tiles { grid-template-columns: 1fr; }
+}
+.mobile-cta-chat { display: none; }
+@media (max-width: 800px) { .mobile-cta .mobile-cta-chat { display: grid; } }
+
+/* Ajustes pulido 2 */
+.product-body .price { margin: 0.9rem 0 1rem; }
+.product-body .product-call { margin-top: 0.8rem; }
+.product-visual::before { opacity: 0.2; }
+.product-art { width: 196px; }
+.contact-grid { grid-template-areas: "intro form" "info form"; row-gap: 0; }
+.contact-grid > .col-intro { grid-area: intro; position: static; }
+.contact-grid > .info-card { grid-area: info; }
+.contact-grid > form { grid-area: form; }
+@media (min-width: 801px) {
+  .wrap { width: min(1180px, 92vw, calc(100vw - 168px)); }   /* deja espacio a la burbuja del chat */
+  .bf-bubble { width: 56px; height: 56px; }
+}
+@media (max-width: 960px) {
+  .contact-grid { grid-template-areas: "intro" "form" "info"; row-gap: 1.75rem; }
+  .contact-grid > .info-card { margin-top: 0; }
+}
+@media (max-width: 420px) {
+  .agro-tile { display: grid; grid-template-columns: auto 1fr; align-items: center; column-gap: 0.85rem; padding: 0.9rem 3.2rem 0.9rem 0.9rem; }
+  .agro-tile .svc-ico { margin: 0; }
+  .agro-num { top: 50%; transform: translateY(-50%); font-size: 1.35rem; }
+}
