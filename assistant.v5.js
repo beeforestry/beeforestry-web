@@ -20,7 +20,7 @@
     if (/hola|buenas|saludos|hey/.test(q))
       return "¡Hola! Soy el chat de BeeForestry. ¿En qué le ayudo: rescate de abejas, agroforestería, tienda, guía o escuelas?";
     if (/rescate|remoci|reubic|enjambre|colonia|abeja|panal|quitar/.test(q))
-      return "Rescatamos y reubicamos (no exterminamos). Si me deja su teléfono y unas fotos, Sebastian le llama pronto.";
+      return "Rescatamos y reubicamos colonias. Si me deja su teléfono y unas fotos, Sebastian le llama pronto.";
     if (/agro|forest|finca|solar|siembra/.test(q))
       return "Hacemos preparación de agroforestales. Déjeme teléfono y municipio y le contactamos.";
     if (/colmena|caja|tienda|equipo/.test(q))
@@ -33,8 +33,8 @@
       return "Estamos en Instagram @beeforestry. También puede dejar teléfono aquí para llamada directa.";
     if (/precio|cuesta|costo|cotiz/.test(q))
       return "Para cotizar bien necesitamos fotos y un teléfono de contacto. ¿Me los puede dejar aquí abajo?";
-    if (/extermin|matar|veneno|fumig/.test(q))
-      return "No exterminamos: rescatamos y reubicamos. ¿Quiere que le llamemos? Deje su teléfono.";
+    if (/veneno|fumig|quimic/.test(q))
+      return "Trabajamos con rescate y reubicación. ¿Quiere que le llamemos? Deje su teléfono.";
     if (/gracias/.test(q))
       return "Con gusto. Cuando quiera, deje su teléfono abajo y le llamamos.";
     return "Puedo orientarle sobre rescate, agroforestería, tienda, guía ($20) o escuelas. Si deja su teléfono abajo, Sebastian le llama personalmente.";

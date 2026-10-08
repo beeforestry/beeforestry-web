@@ -1,6 +1,6 @@
 # BeeForestry website
 
-Sitio público de BeeForestry (Puerto Rico): rescate y remoción de abejas sin exterminio, preparación de sistemas agroforestales, y colmenas y cajas de abejas.
+Sitio público de BeeForestry (Puerto Rico): rescate, remoción y reubicación de abejas, preparación de sistemas agroforestales, y colmenas y cajas de abejas.
 
 - Sitio: https://beeforestry.github.io/beeforestry-web/
 - Contacto: 787-598-3543 · Beeforestry@gmail.com · Instagram @beeforestry
