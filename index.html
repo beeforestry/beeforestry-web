@@ -236,8 +236,9 @@
 
 <main>
 <section id="inicio" class="hero">
+  <div class="hero-deco" aria-hidden="true"></div>
   <div class="wrap hero-grid">
-    <div>
+    <div class="hero-copy">
       <p class="eyebrow">Puerto Rico · Rescate de abejas · Agroforestería</p>
       <h1>Rescate y remoción de abejas en Puerto Rico — sin exterminio</h1>
       <p class="lede">¿Abejas en el techo, una pared o un árbol? Las sacamos y las reubicamos de forma segura para su familia y para las abejas. También preparamos sistemas agroforestales y tenemos colmenas y cajas para su hogar, finca o escuela.</p>
@@ -246,11 +247,35 @@
         <a class="btn" href="#contacto">Solicitar cotización</a>
         <a class="btn btn-ghost" href="tel:+17875983543">📞 Llamar 787-598-3543</a>
       </div>
+      <ul class="trust" aria-label="Lo que nos distingue">
+        <li><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>Sin exterminio</li>
+        <li><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>Todo Puerto Rico, incluyendo Vieques y Culebra</li>
+        <li><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Todos los días, con cita previa</li>
+        <li><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg>ATH Móvil, cash y cheques</li>
+      </ul>
       <p class="fine"><a href="tel:+17875983543">787-598-3543</a> · <a href="https://instagram.com/beeforestry" target="_blank" rel="noopener">@beeforestry</a> · <a href="mailto:Beeforestry@gmail.com">Beeforestry@gmail.com</a></p>
     </div>
-    <figure class="hero-visual">
+    <div class="hero-art">
+      <svg class="hero-bee" viewBox="0 0 120 90" width="120" height="90" aria-hidden="true" focusable="false">
+        <path d="M6 70c18 6 30-14 46-10s16 18 30 12" fill="none" stroke="#c47f0a" stroke-width="1.6" stroke-dasharray="3 6" stroke-linecap="round" opacity=".55"/>
+        <g class="hero-bee-body">
+          <ellipse cx="86" cy="30" rx="11" ry="15" transform="rotate(-25 86 30)" fill="#ffffff" fill-opacity=".85" stroke="#1e4a28" stroke-opacity=".35"/>
+          <ellipse cx="100" cy="34" rx="9" ry="13" transform="rotate(20 100 34)" fill="#ffffff" fill-opacity=".8" stroke="#1e4a28" stroke-opacity=".35"/>
+          <ellipse cx="92" cy="50" rx="15" ry="11" fill="#e8a317"/>
+          <path d="M86 40.5c-2 6-2 13 0 19M93 39c-2 7-2 15 0 22" stroke="#1a2e1a" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+          <circle cx="106" cy="48" r="5.5" fill="#1a2e1a"/>
+          <path d="M108 43c2-5 5-7 8-7M106 43c0-5 2-8 4-9" stroke="#1a2e1a" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+          <path d="M77 50l-5 1.5" stroke="#1a2e1a" stroke-width="2" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <figure class="hero-visual">
       <img src="images/hero-rescate-800.webp" srcset="images/hero-rescate-480.webp 480w, images/hero-rescate-800.webp 800w" sizes="(max-width: 800px) 92vw, 440px" alt="Rescate de abejas BeeForestry en Puerto Rico: ¿problemas con abejas? Rescate y reubicación segura. Llámenos al 787-598-3543" width="800" height="1000" loading="eager" fetchpriority="high" />
-    </figure>
+      </figure>
+      <svg class="hero-leaf" viewBox="0 0 80 80" width="80" height="80" aria-hidden="true" focusable="false">
+        <path d="M10 70C10 36 32 14 70 10c0 38-22 60-60 60z" fill="#2f6b3a" fill-opacity=".16"/>
+        <path d="M10 70 54 26M26 54l-2-14M38 42l-1-13M26 54l14 1M38 42l13 1" stroke="#2f6b3a" stroke-opacity=".4" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -259,20 +284,23 @@
     <h2 class="section-title">Servicios de rescate y remoción de abejas</h2>
     <p class="muted section-intro">Si tiene abejas en el techo, en una pared, en un árbol o en la caja del contador, le ayudamos a resolverlo de forma segura. No exterminamos: rescatamos y reubicamos las abejas.</p>
     <div class="cards3">
-      <article class="card">
+      <article class="card svc" data-reveal>
+        <span class="svc-ico"><svg class="ico" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="16" cy="19" rx="6" ry="8"/><path d="M10.6 16h10.8M10.3 20h11.4M11.5 24h9"/><path d="M13 11.5c-3-5-9-4-8.5 0 .4 3 4.6 3.7 8.3 1.6M19 11.5c3-5 9-4 8.5 0-.4 3-4.6 3.7-8.3 1.6"/><path d="M14 7.5l-1.5-3M18 7.5l1.5-3"/></svg></span>
         <h3>Rescate de enjambres</h3>
         <p>Captura y traslado seguro cuando el enjambre está en exterior o acceso razonable.</p>
       </article>
-      <article class="card">
+      <article class="card svc" data-reveal>
+        <span class="svc-ico"><svg class="ico" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15 16 5l12 10"/><path d="M7 13v14h18V13"/><path d="M14 18.5l2-1.2 2 1.2v2.4l-2 1.2-2-1.2z"/><path d="M18 21l2 1.1v2.3"/></svg></span>
         <h3>Remoción de colonias en techos y paredes</h3>
         <p>Extracción cuidadosa de colonias establecidas en techos, paredes, árboles u otras estructuras.</p>
       </article>
-      <article class="card">
+      <article class="card svc" data-reveal>
+        <span class="svc-ico"><svg class="ico" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="6" width="18" height="22" rx="2.5"/><path d="M12 6V4.5h8V6"/><path d="M11.5 17l3 3 6-6.5"/></svg></span>
         <h3>Evaluación y cotización</h3>
         <p>Le pedimos municipio, ubicación y fotos para cotizarle mejor. Visita en sitio cuando hace falta.</p>
       </article>
     </div>
-    <p class="zones"><strong>Zonas que servimos:</strong> todo Puerto Rico, incluyendo Vieques y Culebra — los 78 municipios, de San Juan a Mayagüez y de Arecibo a Ponce. Indíquenos su municipio al pedir la cotización.</p>
+    <p class="zones" data-reveal><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><span><strong>Zonas que servimos:</strong> todo Puerto Rico, incluyendo Vieques y Culebra — los 78 municipios, de San Juan a Mayagüez y de Arecibo a Ponce. Indíquenos su municipio al pedir la cotización.</span></p>
   </div>
 </section>
 
@@ -289,7 +317,8 @@
           <li>Integración con colmenas cuando aplica</li>
         </ul>
       </div>
-      <aside class="card accent-card">
+      <aside class="card accent-card" data-reveal>
+        <span class="svc-ico"><svg class="ico" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 26C6 13 14 6 27 5c0 13-7 21-19 21"/><path d="M6 26 18 14"/></svg></span>
         <h3>¿Tiene un solar o finca?</h3>
         <p>Cuéntenos el municipio y el tamaño aproximado. Le orientamos el siguiente paso.</p>
         <a class="btn" href="#contacto">Pedir orientación</a>
@@ -303,16 +332,16 @@
     <h2 class="section-title">Tienda: colmenas y cajas de abejas</h2>
     <p class="muted section-intro">Colmenas y cajas de abejas para apoyar una apicultura responsable en Puerto Rico.</p>
     <div class="cards3 products">
-      <article class="card product">
-        <p class="pill">Equipo</p>
+      <article class="card product" data-reveal>
+        <div class="product-head"><span class="svc-ico"><svg class="ico" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8h16l2 4H6z"/><rect x="7" y="12" width="18" height="6" rx="1"/><rect x="7" y="18" width="18" height="7" rx="1"/><path d="M14 25v-2.5h4V25"/></svg></span><p class="pill">Equipo</p></div>
         <h3>Colmenas</h3>
         <p>Colmenas listas para apicultura responsable. Disponibilidad y modelos según temporada.</p>
         <p class="price">Cotización según modelo</p>
         <a class="btn btn-sm" href="tel:+17875983543">📞 Llamar por disponibilidad</a>
         <p class="product-call"><a href="tel:+17875983543">787-598-3543</a> · consulte modelos y stock</p>
       </article>
-      <article class="card product">
-        <p class="pill">Equipo</p>
+      <article class="card product" data-reveal>
+        <div class="product-head"><span class="svc-ico"><svg class="ico" viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l12-5 12 5-12 5z"/><path d="M4 11v11l12 5 12-5V11"/><path d="M16 16v11"/></svg></span><p class="pill">Equipo</p></div>
         <h3>Cajas de abejas</h3>
         <p>Cajas y componentes para manejar y expandir su apiario con buen criterio de campo.</p>
         <p class="price">Cotización según pieza</p>
@@ -324,11 +353,11 @@
   </div>
 </section>
 
-<section id="colabora" class="section">
+<section id="colabora" class="section section-alt">
   <div class="wrap narrow">
     <h2 class="section-title">Colaboraciones, voluntariado y talleres para escuelas</h2>
     <p class="muted">Talleres, jornadas de campo, proyectos escolares y alianzas. Cuéntenos cómo quiere participar.</p>
-    <form id="collab-form" class="card form" novalidate>
+    <form id="collab-form" class="card form" novalidate data-reveal>
       <label>Nombre / institución<input name="nombre" required placeholder="Escuela, ONG o su nombre" /></label>
       <label>Tipo
         <select name="tipo" required>
@@ -352,25 +381,25 @@
   </div>
 </section>
 
-<section id="instagram" class="section section-alt">
+<section id="instagram" class="section">
   <div class="wrap narrow">
-    <div class="card accent-card" style="text-align:center">
+    <div class="card accent-card ig-card" data-reveal>
       <p class="eyebrow">Síganos en Instagram</p>
-      <h2 class="section-title" style="margin-bottom:0.5rem">@beeforestry</h2>
+      <h2 class="section-title">@beeforestry</h2>
       <p class="muted">Fotos de rescates, agroforestería y colmenas en Puerto Rico. Escríbanos por DM para cotizar remoción o reubicación.</p>
-      <p style="margin:1rem 0 0">
+      <p class="ig-cta">
         <a class="btn" href="https://instagram.com/beeforestry" target="_blank" rel="noopener">Abrir Instagram @beeforestry</a>
       </p>
-      <p class="fine" style="margin-top:0.75rem">También: <a href="tel:+17875983543">787-598-3543</a> · <a href="mailto:Beeforestry@gmail.com">Beeforestry@gmail.com</a></p>
+      <p class="fine">También: <a href="tel:+17875983543">787-598-3543</a> · <a href="mailto:Beeforestry@gmail.com">Beeforestry@gmail.com</a></p>
     </div>
   </div>
 </section>
 
-<section id="galeria" class="section">
+<section id="galeria" class="section section-alt">
   <div class="wrap">
     <h2 class="section-title">Rescates de abejas en el campo</h2>
     <p class="muted section-intro">Trabajo real de BeeForestry: proteger hogares y abejas en Puerto Rico.</p>
-    <div class="gallery">
+    <div class="gallery" data-reveal>
       <figure>
         <img src="images/hero-rescate-800.webp" srcset="images/hero-rescate-480.webp 480w, images/hero-rescate-800.webp 800w" sizes="(max-width: 800px) 92vw, 540px" alt="Colonia de abejas atendida por BeeForestry" width="800" height="1000" loading="lazy" decoding="async" />
         <figcaption>Evaluación y rescate cuidadoso — sin exterminio.</figcaption>
@@ -383,11 +412,11 @@
   </div>
 </section>
 
-<section id="contacto" class="section section-alt">
+<section id="contacto" class="section section-honey">
   <div class="wrap narrow">
     <h2 class="section-title">Cotización de rescate de abejas o servicio</h2>
     <p class="muted section-intro">Complete el formulario y BeeForestry le llama con la información. Entre más claros estén el municipio, la ubicación y las fotos, más rápido le cotizamos.</p>
-    <form id="quote-form" class="card form quote-form" novalidate>
+    <form id="quote-form" class="card form quote-form" novalidate data-reveal>
       <label>Nombre completo
         <input name="nombre" required autocomplete="name" placeholder="Su nombre" />
       </label>
@@ -524,7 +553,7 @@
     <h2 class="section-title">Casos recientes de rescate de abejas</h2>
     <p class="muted section-intro">Algunos de los rescates que hemos hecho en Puerto Rico.</p>
     <div class="cases">
-      <article class="card case">
+      <article class="card case" data-reveal>
         <p class="case-place">Rescate de colmena</p>
         <h3>📍 Culebra</h3>
         <p>Viajamos a Culebra para rescatar una colmena en una casa en reparación. Reubicamos las abejas de forma segura y los misioneros pudieron seguir trabajando.</p>
@@ -537,7 +566,7 @@
 <section id="preguntas" class="section section-alt">
   <div class="wrap narrow">
     <h2 class="section-title">Preguntas frecuentes sobre rescate de abejas</h2>
-    <div class="faq">
+    <div class="faq" data-reveal>
       <details class="card faq-item">
         <summary>¿Ustedes matan o exterminan las abejas?</summary>
         <p>No. En BeeForestry no exterminamos: rescatamos las abejas y las reubicamos, protegiendo a su familia y a las abejas.</p>
@@ -573,7 +602,7 @@
 
 <footer class="footer">
   <div class="wrap">
-    <p class="footer-brand"><img src="images/logo-96.webp" alt="Logo oficial BeeForestry" width="36" height="36" loading="lazy" /><strong>BeeForestry</strong> · Rescate de abejas, agroforestería y apicultura en Puerto Rico</p>
+    <p class="footer-brand"><img src="images/logo-96.webp" alt="Logo oficial BeeForestry" width="36" height="36" loading="lazy" /><strong>BeeForestry</strong><span class="footer-tag">Rescate de abejas, agroforestería y apicultura en Puerto Rico</span></p>
     <p><a href="tel:+17875983543">787-598-3543</a> · <a href="mailto:Beeforestry@gmail.com">Beeforestry@gmail.com</a> · Instagram <a href="https://instagram.com/beeforestry" target="_blank" rel="noopener">@beeforestry</a></p>
     <p>Trabajamos todos los días de la semana, con cita previa.</p>
     <p class="fine">Pagos: ATH Móvil, cash, cheques. Rescatamos y reubicamos; no exterminamos.</p>
@@ -585,6 +614,20 @@
   <a class="mobile-cta-wa" href="https://wa.me/17875983543?text=Hola%20BeeForestry%2C%20necesito%20ayuda%20con%20unas%20abejas.%20Mi%20municipio%20es%3A%20___.%20Est%C3%A1n%20en%20%28techo%2C%20pared%2C%20%C3%A1rbol%E2%80%A6%29%3A%20___.%20Le%20puedo%20enviar%20fotos." target="_blank" rel="noopener"><svg class="wa-ico" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.86 9.86 0 0 0 12.04 2zm0 18.15h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.25-8.23a8.2 8.2 0 0 1 8.23 8.24c0 4.54-3.7 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>WhatsApp</a>
 </div>
 
+<script>
+/* Aparición suave al hacer scroll (respeta "reducir movimiento"; solo opacity/transform, sin mover el layout) */
+(function () {
+  var els = [].slice.call(document.querySelectorAll("[data-reveal]"));
+  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var vh = window.innerHeight;
+  els.forEach(function (el) { if (el.getBoundingClientRect().top < vh) el.classList.add("is-in"); });
+  document.documentElement.classList.add("reveal-on");
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
+  }, { rootMargin: "0px 0px -6% 0px" });
+  els.forEach(function (el) { if (!el.classList.contains("is-in")) io.observe(el); });
+})();
+</script>
 <script src="app.v9.js" defer></script>
 <script src="assistant.v9.js" defer></script>
 </body>
