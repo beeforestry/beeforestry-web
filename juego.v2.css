@@ -1,0 +1,175 @@
+/* =====================================================================
+   juego.v1 · "Abeja al vuelo" (minijuego opcional, sin librerías)
+   ===================================================================== */
+#juego { --wave-color: var(--alt); }
+main:has(#juego) + .footer { --wave-color: var(--paper); }
+
+.game-layout {
+  display: grid; gap: 1.75rem; align-items: center;
+}
+@media (min-width: 900px) {
+  .game-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 4rem; }
+}
+.game-copy .section-intro { margin-bottom: 1.1rem; }
+.game-keys {
+  list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem;
+  color: var(--muted); font-size: 0.95rem;
+}
+.game-keys li { display: flex; align-items: center; gap: 0.6rem; }
+.game-keys kbd {
+  display: inline-grid; place-items: center; min-width: 2.1rem; height: 1.8rem; padding: 0 0.5rem;
+  font: 600 0.78rem/1 "DM Sans", system-ui, sans-serif; color: var(--leaf-deep);
+  background: #fff; border: 1px solid #e3d7c2; border-bottom-width: 3px; border-radius: 8px;
+}
+
+.game-card {
+  position: relative; width: 100%; max-width: 420px; margin: 0 auto;
+  aspect-ratio: 2 / 3; border-radius: 26px; overflow: hidden;
+  background: linear-gradient(180deg, #fdf6e6 0%, #f4ecd9 100%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.8) inset, 0 0 0 1px rgba(196,127,10,.14), 0 22px 50px -18px rgba(30,74,40,.35);
+  isolation: isolate;
+}
+.game-card canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+  outline: none; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+  cursor: pointer;
+}
+.game-card.is-playing canvas { touch-action: none; }
+.game-card canvas:focus-visible { box-shadow: inset 0 0 0 3px rgba(232,163,23,.75); }
+
+.game-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem;
+  padding: 1.5rem; text-align: center;
+  background: radial-gradient(120% 80% at 50% 45%, rgba(253,246,230,.55), rgba(253,246,230,.15) 70%);
+  opacity: 1; transition: opacity .25s ease;
+}
+.game-overlay[hidden] { display: none; }
+.game-panel {
+  width: min(300px, 100%); padding: 1.4rem 1.25rem 1.3rem;
+  background: rgba(255, 252, 245, 0.9); border-radius: 22px;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 1px rgba(196,127,10,.16), 0 18px 40px -16px rgba(30,74,40,.35);
+  animation: game-pop .35s cubic-bezier(.2,.9,.3,1.2) both;
+}
+@keyframes game-pop { from { opacity: 0; transform: translateY(10px) scale(.96); } to { opacity: 1; transform: none; } }
+.game-panel h3 {
+  margin: 0 0 0.35rem; font-family: Fraunces, Georgia, serif; font-size: 1.65rem; line-height: 1.15;
+  color: var(--leaf-deep); letter-spacing: -0.01em;
+}
+.game-panel p { margin: 0 0 1rem; color: #4a5a4a; font-size: 0.95rem; line-height: 1.45; }
+.game-panel .game-best { margin: 0.85rem 0 0; font-size: 0.85rem; color: var(--honey-text, #8a5a06); font-weight: 600; }
+.game-badge {
+  display: inline-block; margin-bottom: 0.55rem; padding: 0.22rem 0.7rem; border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--honey-text, #8a5a06); background: #fcefcf;
+}
+.game-btn {
+  min-width: 11rem; min-height: 3rem; padding: 0.8rem 1.6rem; font-size: 1.05rem;
+  background: linear-gradient(180deg, #f2b632, #e2990f); color: #2a1d02;
+  box-shadow: 0 2px 0 #b97a07, 0 10px 22px -8px rgba(196,127,10,.65);
+  transition: transform .12s ease, box-shadow .12s ease, filter .2s ease;
+}
+.game-btn:hover { filter: brightness(1.04); text-decoration: none; }
+.game-btn:active { transform: translateY(2px); box-shadow: 0 0 0 #b97a07, 0 6px 14px -8px rgba(196,127,10,.65); }
+.game-btn:focus-visible { outline: 3px solid var(--leaf); outline-offset: 3px; }
+.game-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin: 0.4rem 0 1.1rem; }
+.game-stats div { padding: 0.65rem 0.5rem; border-radius: 14px; background: #f7f0df; }
+.game-stats span { display: block; font-size: 0.72rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.game-stats strong { display: block; font-family: Fraunces, Georgia, serif; font-size: 1.9rem; line-height: 1.1; color: var(--leaf-deep); }
+.game-newbest { color: var(--honey-text, #8a5a06) !important; font-weight: 700; margin-top: -0.4rem !important; }
+
+.game-sound {
+  position: absolute; top: 12px; right: 12px; z-index: 3;
+  display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
+  border: 0; border-radius: 999px; cursor: pointer; color: var(--leaf-deep);
+  background: rgba(255, 252, 245, 0.85); box-shadow: 0 0 0 1px rgba(30,74,40,.12), 0 4px 12px -4px rgba(30,74,40,.3);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.game-sound:focus-visible { outline: 3px solid var(--honey); outline-offset: 2px; }
+.game-sound .ico-on { display: none; }
+.game-sound[aria-pressed="true"] .ico-on { display: block; }
+.game-sound[aria-pressed="true"] .ico-off { display: none; }
+
+@media (max-width: 800px) {
+  .game-copy { text-align: left; }
+  .game-keys li.desk { display: none; }
+  .game-card { border-radius: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .game-panel { animation: none; }
+}
+.game-card .sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+.game-keys .tap {
+  display: inline-grid; place-items: center; width: 1.8rem; height: 1.8rem; border-radius: 999px;
+  background: #fcefcf; color: var(--honey-text, #8a5a06); flex: none;
+}
+/* En teléfonos bajitos, que la tarjeta completa quepa entre el header y la barra de abajo */
+@media (max-width: 800px) {
+  .game-card { width: min(100%, calc((100svh - 170px) * 2 / 3)); min-width: 280px; }
+}
+/* Mantener el botón miel también en hover/foco (el .btn del sitio lo pone verde) */
+.game-card .game-btn, .game-card .game-btn:hover, .game-card .game-btn:focus, .game-card .game-btn:focus-visible {
+  background: linear-gradient(180deg, #f2b632, #e2990f); color: #2a1d02;
+}
+
+/* ---------- Celular primero: toques sin demora, sin zoom, sin rebote ---------- */
+.game-card {
+  -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.game-card canvas { touch-action: none; }
+.game-overlay { touch-action: manipulation; cursor: pointer; }
+.game-panel { cursor: default; }
+.game-sound { width: 48px; height: 48px; touch-action: manipulation; }
+.game-btn { min-height: 3.25rem; touch-action: manipulation; }
+.game-tap-hint { margin: 0.75rem 0 0 !important; font-size: 0.8rem !important; color: var(--muted) !important; }
+/* Celular acostado: que el juego completo quepa en la altura */
+@media (orientation: landscape) and (max-height: 520px) {
+  .game-layout { grid-template-columns: minmax(0, 1fr) auto; gap: 1.5rem; }
+  .game-card { width: calc((100svh - 20px) * 2 / 3); min-width: 0; max-width: none; }
+  /* mientras se juega acostado, el header se esconde para dar toda la altura al juego */
+  html.bee-playing .top { transform: translateY(-110%); transition: transform .2s ease; }
+  .game-panel { padding: 0.9rem 0.8rem; }
+  .game-panel h3 { font-size: 1.25rem; }
+  .game-panel p { font-size: 0.8rem; margin-bottom: 0.6rem; }
+  .game-stats strong { font-size: 1.4rem; }
+  .game-btn { min-width: 8rem; min-height: 2.75rem; font-size: 0.95rem; padding: 0.55rem 1rem; }
+}
+
+/* ---------- v2 · Botón flotante de la abeja (lleva al juego) ---------- */
+.bee-fab {
+  position: fixed; right: 1.1rem; bottom: 6.4rem; z-index: 2147481000;
+  display: grid; place-items: center; width: 56px; height: 56px; border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #fffaf0, #fbefd3 70%);
+  box-shadow: 0 0 0 2px #f2c55c, 0 0 0 5px rgba(255, 250, 240, .9), 0 10px 24px -8px rgba(30, 74, 40, .45);
+  text-decoration: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .25s ease, visibility .25s;
+}
+.bee-fab:hover { text-decoration: none; transform: translateY(-2px) scale(1.04); }
+.bee-fab:active { transform: scale(.94); }
+.bee-fab:focus-visible { outline: 3px solid var(--leaf); outline-offset: 4px; }
+.bee-fab svg { display: block; width: 40px; height: 40px; animation: bee-fab-bob 3.2s ease-in-out infinite; }
+.bee-fab .bee-fab-tip {
+  position: absolute; right: calc(100% + 10px); top: 50%; translate: 0 -50%;
+  white-space: nowrap; padding: .4rem .75rem; border-radius: 999px;
+  font: 700 .82rem/1 "DM Sans", system-ui, sans-serif; color: var(--leaf-deep);
+  background: #fffaf0; box-shadow: 0 0 0 1px rgba(196,127,10,.2), 0 6px 16px -6px rgba(30,74,40,.35);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease;
+}
+.bee-fab:hover .bee-fab-tip, .bee-fab:focus-visible .bee-fab-tip { opacity: 1; }
+.bee-fab.is-hidden { opacity: 0; visibility: hidden; transform: scale(.8); pointer-events: none; }
+@keyframes bee-fab-bob { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-3px) rotate(3deg); } }
+@media (max-width: 800px) {
+  /* justo encima de la barra Llamar / WhatsApp / chat */
+  .bee-fab { right: 12px; bottom: calc(82px + env(safe-area-inset-bottom)); width: 52px; height: 52px; }
+  .bee-fab svg { width: 36px; height: 36px; }
+  .bee-fab .bee-fab-tip { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bee-fab svg { animation: none; }
+}
+@media print { .bee-fab { display: none; } }
