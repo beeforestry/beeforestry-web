@@ -424,6 +424,8 @@
     if (Math.abs(dy) > 2) window.scrollBy({ top: dy, behavior: reduceMotion ? "auto" : "smooth" });
   }
   function start() {
+    document.documentElement.classList.remove("bee-typing");
+    newRunToken();
     reset(); bee.baseY = bee.y; state = "ready"; readyFromPause = false;
     show(null); root.classList.add("is-playing"); document.documentElement.classList.add("bee-playing");
     canvas.focus({ preventScroll: true });
@@ -437,6 +439,7 @@
     screens.over.querySelector("[data-best]").textContent = best;
     screens.over.querySelector("[data-newbest]").hidden = !(isNew && score > 0);
     screens.over.querySelector("h3").textContent = score === 0 ? "¡Uy! Otra vez" : "¡Buen vuelo!";
+    prepareSave();
     updateBestLabels();
     if (live) live.textContent = "Fin del juego. Puntos: " + score + ". Récord: " + best + ".";
     show("over"); draw();
@@ -471,6 +474,7 @@
     var ov = e.target.closest(".game-overlay");
     if (!ov || e.target.closest(".game-panel")) return;
     if (state === "over" && performance.now() - overAt < 900) return;
+    if (state === "over" && saveForm && !saveForm.hidden) return;   // no perder la oportunidad de guardar por un toque suelto
     if (state === "idle" || state === "over") start();
     else if (state === "paused") resume();
   });
@@ -509,6 +513,140 @@
   window.addEventListener("pagehide", pause);
   window.addEventListener("blur", function () { if (state === "play") pause(); });
 
+
+  /* ---------- Récord de jugadores (servidor: Apps Script + Google Sheet) ---------- */
+  var BOARD_URL = (root.getAttribute("data-board-url") || "").trim();
+  var boardOn = /^https?:\/\//.test(BOARD_URL);
+  var saveForm = root.querySelector("[data-save-form]");
+  var nameInput = saveForm && saveForm.querySelector("input");
+  var saveBtn = saveForm && saveForm.querySelector("button[type=submit]");
+  var saveMsg = saveForm && saveForm.querySelector(".game-save-msg");
+  var savedBox = root.querySelector("[data-saved]");
+  var boardCard = document.querySelector("[data-board]");
+  var miniBoard = root.querySelector("[data-board-mini]");
+  var runToken = null, tokenPromise = null, saved = false, lastTop = [], myName = "";
+  var NAME_KEY = "beeforestry-abeja-nombre", CID_KEY = "beeforestry-abeja-cid";
+  var cid = "";
+  try {
+    cid = localStorage.getItem(CID_KEY) || "";
+    if (!cid) { cid = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem(CID_KEY, cid); }
+    myName = localStorage.getItem(NAME_KEY) || "";
+  } catch (e) {}
+
+  var MSG = {
+    vacio: "Escriba su nombre.",
+    largo: "El nombre debe tener entre 2 y 24 letras.",
+    caracteres: "Use solo letras: sin números, emojis ni símbolos.",
+    palabra: "Use un nombre propio, sin apodos ni palabras feas.",
+    spam: "Use un nombre propio, sin apodos ni palabras feas.",
+    limite: "Ya guardó varias veces. Intente más tarde.",
+    ficha: "No pudimos validar esta partida. Juegue otra vez para guardar.",
+    puntos: "No pudimos validar esta partida. Juegue otra vez para guardar.",
+    red: "No hay conexión con el récord ahora. Intente otra vez."
+  };
+
+  function api(method, params, body) {
+    var url = BOARD_URL + (BOARD_URL.indexOf("?") === -1 ? "?" : "&") + params;
+    var ctrl = "AbortController" in window ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 15000) : 0;
+    var opts = { method: method, signal: ctrl && ctrl.signal, cache: "no-store", redirect: "follow" };
+    if (body) { opts.body = JSON.stringify(body); opts.headers = { "Content-Type": "text/plain;charset=utf-8" }; }
+    return fetch(url, opts).then(function (r) { return r.json(); }).finally(function () { clearTimeout(timer); });
+  }
+  function renderBoard(top) {
+    lastTop = top || [];
+    var meKey = myName.toLowerCase();
+    [].forEach.call(document.querySelectorAll("#juego ol[data-board-list]"), function (ol) {
+      var n = parseInt(ol.getAttribute("data-board-list"), 10) || 10;
+      ol.textContent = "";
+      lastTop.slice(0, n).forEach(function (row) {
+        var li = document.createElement("li");
+        var a = document.createElement("span"); a.className = "n"; a.textContent = row.nombre;
+        var b = document.createElement("span"); b.className = "p"; b.textContent = row.puntos;
+        if (meKey && String(row.nombre).toLowerCase() === meKey) li.className = "is-me";
+        li.appendChild(a); li.appendChild(b); ol.appendChild(li);
+      });
+    });
+    if (boardCard) {
+      boardCard.hidden = false;
+      boardCard.querySelector("[data-board-empty]").hidden = lastTop.length > 0;
+      boardCard.querySelector("ol").hidden = !lastTop.length;
+    }
+    if (miniBoard) miniBoard.hidden = !lastTop.length;
+  }
+  function loadTop() {
+    if (!boardOn) return;
+    api("GET", "action=top").then(function (d) { if (d && d.ok) renderBoard(d.top); }).catch(function () {});
+  }
+  function newRunToken() {
+    if (!boardOn) return;
+    runToken = null;
+    tokenPromise = api("GET", "action=start&t=" + Date.now()).then(function (d) {
+      if (d && d.ok) runToken = d.token; return runToken;
+    }).catch(function () { return null; });
+  }
+  function setTyping(on) { document.documentElement.classList.toggle("bee-typing", !!on); }
+  function setMsg(text, isErr) {
+    saveMsg.textContent = text || ""; saveMsg.classList.toggle("is-error", !!isErr);
+    nameInput.setAttribute("aria-invalid", isErr ? "true" : "false");
+  }
+  function prepareSave() {
+    saved = false;
+    if (!saveForm) return;
+    var panel = screens.over.querySelector(".game-panel");
+    var canSave = boardOn && score > 0;
+    saveForm.hidden = !canSave; savedBox.hidden = true;
+    panel.classList.toggle("game-over-has-form", canSave);
+    if (canSave) { nameInput.value = myName; setMsg(""); saveBtn.disabled = false; }
+  }
+  function clientCheck(v) {
+    v = v.replace(/\s+/g, " ").trim();
+    if (!v) return "vacio";
+    if (v.length < 2 || v.length > 24) return "largo";
+    if (!/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ'’ -]+$/.test(v)) return "caracteres";
+    return "";
+  }
+  if (saveForm) {
+    nameInput.addEventListener("focus", function () {
+      setTyping(true);
+      setTimeout(function () { if (document.activeElement === nameInput) nameInput.scrollIntoView({ block: "center", behavior: "auto" }); }, 300);
+    });
+    nameInput.addEventListener("blur", function () { setTimeout(function () { if (document.activeElement !== nameInput) setTyping(false); }, 150); });
+    nameInput.addEventListener("input", function () { if (saveMsg.classList.contains("is-error")) setMsg(""); });
+    saveForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (saved || saveBtn.disabled) return;
+      var v = nameInput.value, bad = clientCheck(v);
+      if (bad) { setMsg(MSG[bad], true); nameInput.focus(); return; }
+      saveBtn.disabled = true; setMsg("Guardando…");
+      var pts = score;
+      (runToken ? Promise.resolve(runToken) : (tokenPromise || Promise.resolve(null))).then(function (tok) {
+        if (!tok) throw new Error("sin-ficha");
+        return api("POST", "action=save", { action: "save", nombre: v, puntos: pts, token: tok, cid: cid });
+      }).then(function (d) {
+        if (d && d.ok) {
+          saved = true; myName = d.nombre;
+          try { localStorage.setItem(NAME_KEY, myName); } catch (er) {}
+          renderBoard(d.top);
+          var pos = -1;
+          d.top.forEach(function (r, i) { if (pos < 0 && r.nombre.toLowerCase() === myName.toLowerCase() && r.puntos === pts) pos = i; });
+          savedBox.querySelector("[data-saved-msg]").textContent = "¡Guardado, " + myName + "!" + (pos >= 0 ? " Va en el #" + (pos + 1) + "." : "");
+          saveForm.hidden = true; savedBox.hidden = false;
+          screens.over.querySelector(".game-panel").classList.remove("game-over-has-form");
+          screens.over.querySelector("[data-newbest]").hidden = true;
+          if (live) live.textContent = savedBox.querySelector("[data-saved-msg]").textContent;
+          nameInput.blur(); setTyping(false);
+          return;
+        }
+        var key = d && d.error === "nombre" ? (d.motivo || "palabra") : (d && MSG[d.error] ? d.error : "red");
+        setMsg(MSG[key] || MSG.palabra, true); saveBtn.disabled = false;
+        if (d && d.error === "nombre") nameInput.focus();
+      }).catch(function (err) {
+        setMsg(err && err.message === "sin-ficha" ? MSG.ficha : MSG.red, true); saveBtn.disabled = false;
+      });
+    });
+  }
+
   /* ---------- Botón flotante de la abeja: lleva al juego y lo deja listo ---------- */
   var fab = document.querySelector(".bee-fab"), section = document.getElementById("juego");
   if (fab && section) {
@@ -532,7 +670,7 @@
   /* ---------- Inicio perezoso: nada corre hasta que la sección esté cerca ---------- */
   function init() {
     if (inited) return; inited = true;
-    reset(); updateBestLabels(); show("start");
+    reset(); updateBestLabels(); show("start"); loadTop();
     if ("ResizeObserver" in window) new ResizeObserver(resize).observe(root);
     else window.addEventListener("resize", resize);
     resize();
