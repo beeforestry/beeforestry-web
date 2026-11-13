@@ -173,3 +173,90 @@ main:has(#juego) + .footer { --wave-color: var(--paper); }
   .bee-fab svg { animation: none; }
 }
 @media print { .bee-fab { display: none; } }
+
+/* =====================================================================
+   v3 · Récord de jugadores (nombre + top 10)
+   ===================================================================== */
+.game-layout { grid-template-areas: "copy" "card" "board"; }
+.game-copy { grid-area: copy; }
+.game-card { grid-area: card; }
+.game-board { grid-area: board; }
+@media (min-width: 900px) {
+  .game-layout { grid-template-areas: "copy card" "board card"; align-items: start; row-gap: 1.5rem; }
+  .game-copy { align-self: end; }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .game-layout { grid-template-areas: "copy card" "board card"; }
+}
+
+.game-overlay { overflow-y: auto; overscroll-behavior: contain; }
+.game-panel { max-height: 100%; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.game-overlay[data-screen="over"] { justify-content: safe center; }
+
+/* listas del récord */
+.game-card ol[data-board-list], .game-board ol {
+  list-style: none; margin: 0; padding: 0; counter-reset: pos; text-align: left;
+}
+.game-card ol[data-board-list] li, .game-board ol li {
+  counter-increment: pos; display: grid; grid-template-columns: 1.6rem 1fr auto; align-items: center; gap: .4rem;
+  padding: .28rem .5rem; border-radius: 10px; font-size: .88rem; color: var(--ink);
+}
+.game-card ol[data-board-list] li::before, .game-board ol li::before {
+  content: counter(pos); display: inline-grid; place-items: center; width: 1.35rem; height: 1.35rem; border-radius: 999px;
+  font-size: .7rem; font-weight: 700; color: var(--leaf-deep); background: #eef3e8;
+}
+.game-card ol[data-board-list] li:nth-child(1)::before, .game-board ol li:nth-child(1)::before { background: #f6d27a; color: #4a3203; }
+.game-card ol[data-board-list] li:nth-child(2)::before, .game-board ol li:nth-child(2)::before { background: #e4e1d8; }
+.game-card ol[data-board-list] li:nth-child(3)::before, .game-board ol li:nth-child(3)::before { background: #f1c9a5; }
+.game-card ol li .n, .game-board ol li .n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.game-card ol li .p, .game-board ol li .p { font-family: Fraunces, Georgia, serif; font-weight: 700; color: var(--leaf-deep); }
+.game-card ol li.is-me, .game-board ol li.is-me { background: #fcefcf; }
+.game-card ol li:nth-child(even), .game-board ol li:nth-child(even) { background: rgba(247, 240, 223, .6); }
+.game-card ol li.is-me:nth-child(even), .game-board ol li.is-me:nth-child(even) { background: #fcefcf; }
+
+.game-mini-board { margin-top: .85rem; padding-top: .7rem; border-top: 1px dashed #e6d9bf; }
+.game-mini-title, .game-saved-msg {
+  margin: 0 0 .35rem !important; font-size: .72rem !important; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--honey-text, #8a5a06) !important;
+}
+.game-saved-msg { text-transform: none; letter-spacing: 0; font-size: .95rem !important; color: var(--leaf-deep) !important; }
+.game-saved { margin: 0 0 1rem; }
+
+/* formulario del nombre: grande y cómodo para el pulgar */
+.game-save { margin: 0 0 .9rem; text-align: left; }
+.game-save label { display: block; margin: 0 0 .35rem; font-size: .82rem; font-weight: 700; color: var(--leaf-deep); }
+.game-save-row { display: grid; gap: .5rem; }
+.game-save input {
+  width: 100%; min-height: 48px; padding: .7rem .9rem; border-radius: 14px;
+  border: 1.5px solid #dccca9; background: #fff; color: var(--ink);
+  font: 600 16px/1.2 "DM Sans", system-ui, sans-serif;   /* 16px evita el zoom automático en iPhone */
+}
+.game-save input:focus { outline: none; border-color: var(--honey-deep); box-shadow: 0 0 0 3px rgba(232, 163, 23, .25); }
+.game-save input[aria-invalid="true"] { border-color: #c2412d; }
+.game-card .game-save-btn, .game-card .game-save-btn:hover, .game-card .game-save-btn:focus-visible {
+  min-height: 48px; width: 100%; justify-content: center; background: var(--leaf); color: #fff; touch-action: manipulation;
+}
+.game-card .game-save-btn[disabled] { opacity: .65; cursor: progress; }
+.game-save-msg { min-height: 1.2em; margin: .4rem 0 0 !important; font-size: .84rem !important; line-height: 1.35 !important; }
+.game-save-msg.is-error { color: #a3341f !important; font-weight: 600; }
+.game-over-has-form .game-btn[data-action="play"] {
+  background: transparent; box-shadow: inset 0 0 0 2px #e2b04a; color: var(--honey-text, #8a5a06); min-height: 2.9rem;
+}
+
+/* tarjeta del récord fuera del juego */
+.game-board { width: 100%; max-width: 420px; margin: 0 auto; padding: 1.2rem 1.1rem 1rem; background: #fffdf8; }
+.game-board h3 { margin: 0; font-family: Fraunces, Georgia, serif; font-size: 1.3rem; color: var(--leaf-deep); }
+.game-board > p { margin: .15rem 0 .7rem; font-size: .9rem; }
+@media (min-width: 900px) { .game-board { margin: 0; } }
+
+/* Mientras escribe su nombre en el celular: la barra de abajo y la abeja flotante se apartan */
+@media (max-width: 800px) {
+  html.bee-typing .mobile-cta, html.bee-typing .bee-fab { display: none !important; }
+}
+@media (orientation: landscape) and (max-height: 520px) {
+  .game-mini-board { display: none; }
+  .game-save label { display: none; }
+}
+@media (max-height: 760px) {
+  .game-mini-board ol li:nth-child(n+4) { display: none; }
+}
