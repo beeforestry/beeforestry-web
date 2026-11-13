@@ -139,3 +139,37 @@ main:has(#juego) + .footer { --wave-color: var(--paper); }
   .game-stats strong { font-size: 1.4rem; }
   .game-btn { min-width: 8rem; min-height: 2.75rem; font-size: 0.95rem; padding: 0.55rem 1rem; }
 }
+
+/* ---------- v2 · Botón flotante de la abeja (lleva al juego) ---------- */
+.bee-fab {
+  position: fixed; right: 1.1rem; bottom: 6.4rem; z-index: 2147481000;
+  display: grid; place-items: center; width: 56px; height: 56px; border-radius: 999px;
+  background: radial-gradient(circle at 35% 30%, #fffaf0, #fbefd3 70%);
+  box-shadow: 0 0 0 2px #f2c55c, 0 0 0 5px rgba(255, 250, 240, .9), 0 10px 24px -8px rgba(30, 74, 40, .45);
+  text-decoration: none; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+  transition: transform .2s ease, box-shadow .2s ease, opacity .25s ease, visibility .25s;
+}
+.bee-fab:hover { text-decoration: none; transform: translateY(-2px) scale(1.04); }
+.bee-fab:active { transform: scale(.94); }
+.bee-fab:focus-visible { outline: 3px solid var(--leaf); outline-offset: 4px; }
+.bee-fab svg { display: block; width: 40px; height: 40px; animation: bee-fab-bob 3.2s ease-in-out infinite; }
+.bee-fab .bee-fab-tip {
+  position: absolute; right: calc(100% + 10px); top: 50%; translate: 0 -50%;
+  white-space: nowrap; padding: .4rem .75rem; border-radius: 999px;
+  font: 700 .82rem/1 "DM Sans", system-ui, sans-serif; color: var(--leaf-deep);
+  background: #fffaf0; box-shadow: 0 0 0 1px rgba(196,127,10,.2), 0 6px 16px -6px rgba(30,74,40,.35);
+  opacity: 0; pointer-events: none; transition: opacity .2s ease;
+}
+.bee-fab:hover .bee-fab-tip, .bee-fab:focus-visible .bee-fab-tip { opacity: 1; }
+.bee-fab.is-hidden { opacity: 0; visibility: hidden; transform: scale(.8); pointer-events: none; }
+@keyframes bee-fab-bob { 0%, 100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-3px) rotate(3deg); } }
+@media (max-width: 800px) {
+  /* justo encima de la barra Llamar / WhatsApp / chat */
+  .bee-fab { right: 12px; bottom: calc(82px + env(safe-area-inset-bottom)); width: 52px; height: 52px; }
+  .bee-fab svg { width: 36px; height: 36px; }
+  .bee-fab .bee-fab-tip { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bee-fab svg { animation: none; }
+}
+@media print { .bee-fab { display: none; } }

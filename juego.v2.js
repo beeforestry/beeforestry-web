@@ -509,6 +509,26 @@
   window.addEventListener("pagehide", pause);
   window.addEventListener("blur", function () { if (state === "play") pause(); });
 
+  /* ---------- Botón flotante de la abeja: lleva al juego y lo deja listo ---------- */
+  var fab = document.querySelector(".bee-fab"), section = document.getElementById("juego");
+  if (fab && section) {
+    fab.addEventListener("click", function (e) {
+      e.preventDefault();
+      init();
+      root.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      if (history.replaceState) { try { history.replaceState(null, "", "#juego"); } catch (er) {} }
+      var target = !screens.start.hidden ? screens.start.querySelector("button")
+        : !screens.over.hidden ? screens.over.querySelector("button")
+        : !screens.pause.hidden ? screens.pause.querySelector("button") : canvas;
+      setTimeout(function () { target.focus({ preventScroll: true }); }, reduceMotion ? 0 : 450);
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { fab.classList.toggle("is-hidden", en.isIntersecting); });
+      }, { threshold: 0.2 }).observe(section);
+    }
+  }
+
   /* ---------- Inicio perezoso: nada corre hasta que la sección esté cerca ---------- */
   function init() {
     if (inited) return; inited = true;
